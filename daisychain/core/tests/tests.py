@@ -166,7 +166,7 @@ class TaskTest(BaseTestCase):
         mock_fill_recipe_mappings.assert_not_called()
 
     def test_get_current_url(self):
-        self.assertEquals(get_local_url(), 'https://localhost.daisychain.me')
+        self.assertEquals(get_local_url(), 'https://www.example.com')
 
     def test_replace_mappings(self):
         mappings = {
