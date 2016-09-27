@@ -1,0 +1,117 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "recipes/css/style.css" %}" rel="stylesheet">
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="recipe_edit--backnav" href="{% url 'recipes:list' %}">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                {% trans "Recipes" %}
+            </a>
+        </div>
+        <div class="col-xs-12">
+            <h1>{% trans "Edit recipe" %}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 recipe_trigger_channel recipe_edit--channel"
+             style="background-color: {{ recipe.trigger.channel.color }};
+                    background-image: url({% static recipe.trigger.channel.image %});
+                    color: {{ recipe.trigger.channel.font_color }};">
+            <span class="recipe_edit--channel_name">{{ recipe.trigger.channel.name }}</span>
+            <span class="recipe_edit--trigger_name">{{ recipe.trigger.name }}</span>
+        </div>
+        <div class="col-xs-6 recipe_action_channel recipe_edit--channel"
+             style="background-color: {{ recipe.action.channel.color }};
+                    background-image: url({% static recipe.action.channel.image %});
+                    color: {{ recipe.action.channel.font_color }};">
+            <span class="recipe_edit--channel_name">{{ recipe.action.channel.name }}</span>
+            <span class="recipe_edit--action_name">{{ recipe.action.name }}</span>
+        </div>
+    </div>
+    <form action="{% url "recipes:edit" recipe.id %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-xs-12 recipe_edit--section">
+                <span class="recipe_creation_date">
+                    {% trans "Created" %} {{ recipe.creation_date }}
+                </span>
+            </div>
+            <div class="col-xs-12 recipe_edit--section">
+                <div class="form-group">
+                    <label for="synopsis">{% trans "Synopsis" %}</label>
+                    <textarea class="form-control"
+                              id="synopsis"
+                              name="synopsis"
+                              rows="5">{{ recipe.synopsis }}</textarea>
+                    <span id="synopsis-char-counter" class="help-block"></span>
+                </div>
+            </div>
+            <div class="col-xs-12 recipe_edit--section">
+                <div class="form-group">
+                    <h2>{% trans "Trigger" %}</h2>
+                    <p>{{ recipe.trigger.name }}</p>
+                </div>
+                {% for condition in conditions %}
+                <div class="form-group">
+                    <label for="condition_{{ condition.id }}">{{ condition.trigger_input.name }}</label>
+                    <input type="text"
+                           id="condition_{{ condition.id }}"
+                           name="condition_{{ condition.id }}"
+                           class="form-control"
+                           value="{{ condition.value }}">
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-xs-12 recipe_edit--section">
+                <div class="form-group">
+                    <h2>{% trans "Action" %}</h2>
+                    <p>{{ recipe.action.name }}</p>
+                </div>
+                {% for mapping in mappings %}
+                <div class="form-group">
+                    <label for="mapping_{{ mapping.id }}">{{ mapping.action_input.name }}</label>
+                    {% if mapping.action_input.mime_type == "text" %}
+                    <input type="text"
+                           id="mapping_{{ mapping.id }}"
+                           name="mapping_{{ mapping.id }}"
+                           class="form-control"
+                           data-bubble-input="{% for output in trigger_outputs %}{{ output.name }} {% endfor %}"
+                           value="{{ mapping.trigger_output }}">
+                    {% elif mapping.action_input.mime_type == "image" %}
+                    <select name="mapping_{{ mapping.id }}"
+                            id="mapping_{{ mapping.id }}"
+                            class="form-control">
+                        {% for output in trigger_outputs %}
+                        {% if output.mime_type == "image" %}
+                        <option value="%{{ output.name }}%">{{ output.name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    {% elif mapping.action_input.mime_type == "video" %}
+                    <select name="mapping_{{ mapping.id }}"
+                            id="mapping_{{ mapping.id }}">
+                        {% for output in trigger_outputs %}
+                        {% if output.mime_type == "video" %}
+                        <option value="%{{ output.name }}%">{{ output.name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-xs-12 recipe_edit--section">
+                <div class="btn-group" role="group">
+                    <button id="recipe-save-btn" type="submit"
+                            class="btn btn-primary btn-sm">{% trans "Save" %}
+                            &nbsp;<i class="fa fa-check-square"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript" src="{% static "recipes/js/recipe_synopsis_counter.js" %}"></script>
+    <script type="text/javascript" src="{% static "recipes/js/recipe_mapping.js" %}"></script>
+{% endblock %}

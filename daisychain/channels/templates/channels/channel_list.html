@@ -1,0 +1,32 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "channels/css/list.css" %}" rel="stylesheet">
+    <div class="row">
+        <h1>{% trans "Channels" %}</h1>
+    </div>
+    <div class="row channel_view">
+    {% for channel in channel_list %}
+        <a class="channel_list--channel"
+           href="{{ channel.detail_link }}"
+           style="background-color: {{ channel.color }}; background-image: url({% static channel.image %}); color: {{ channel.font_color }};">
+            <div class="channel_list--channel_name">{{ channel.name }}</div>
+            {% if channel.connection_state == "connected" %}
+            <div class="channel_list--auth_ribbon--connected">
+                <span class="channel_list-auth_text">{% trans "Connected" %}</span>
+                <i class="fa fa-link channel_list--auth_badge" aria-hidden="true"></i>
+            </div>
+            {% elif channel.connection_state == "expired" %}
+            <div class="channel_list--auth_ribbon--disconnected">
+                <span class="channel_list-auth_text">{% trans "Broken" %}</span>
+                <i class="fa fa-chain-broken channel_list--auth_badge" aria-hidden="true"></i>
+            </div>
+            {% endif %}
+        </a>
+    {% empty %}
+        {% trans "Sorry, there are no channels installed, that provide any trigger. Please tell your administrator to install some." %}
+    {% endfor %}
+    </div>
+
+{% endblock %}

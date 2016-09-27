@@ -1,0 +1,55 @@
+.channel_view {
+    margin-top: 37px;
+}
+.channel_list--channel {
+    position: relative;
+    display: inline-block;
+    margin: 1em;
+    border: 1px solid #ccc;
+    width: 180px;
+    height: 270px;
+    padding: 180px .5em 0;
+    background-repeat: no-repeat;
+    background-size: 90px;
+    background-position: 45px 45px;
+    text-align: center;
+}
+.channel_list--auth_ribbon--connected,
+.channel_list--auth_ribbon--disconnected {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 1;
+    color: #fff;
+    line-height: 24px;
+    padding-right: .5em;
+}
+.channel_list--auth_ribbon--connected { background: green; }
+.channel_list--auth_ribbon--disconnected { background: #d62c1a; }
+.channel_list--auth_ribbon--connected:before,
+.channel_list--auth_ribbon--disconnected:before {
+    position: absolute;
+    top: 0;
+    left: -24px;
+    content: " ";
+    border-left: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+}
+.channel_list--auth_ribbon--connected:before {
+    border-top: 12px solid green;
+    border-right: 12px solid green;
+}
+.channel_list--auth_ribbon--disconnected:before {
+    border-top: 12px solid #d62c1a;
+    border-right: 12px solid #d62c1a;
+}
+.channel_list--auth_ribbon--connected span,
+.channel_list--auth_ribbon--disconnected span {
+    padding: 0 .25em;
+}
+.channel_list--channel span {
+    display: none;
+}
+.channel_list--channel:hover span {
+    display: inline;
+}

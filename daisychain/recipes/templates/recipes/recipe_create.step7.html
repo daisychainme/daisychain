@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "recipes/css/style.css" %}" rel="stylesheet">
+    <div class="row">
+        <h2>{% trans "Create a new recipe" %}<h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-3 recipe_create--step_header_prev_box">
+            <span class="recipe_create--step_header_prev">{% trans "Set the action mappings" %}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 recipe_create--step_header_current_box">
+            <h2 class="recipe_create--step_header_current">{% trans "Save your new recipe" %}</h2>
+        </div>
+        <div class="col-md-3 col-sm-3 recipe_create--step_header_next_box">
+        </div>
+    </div>
+    <div class="row recipe_view">
+        <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+            <div class="col-xs-6 recipe_trigger_channel"
+                 style="background-color: {{ trigger.channel.color }};
+                        background-image: url({% static trigger.channel.image %});
+                        color: {{ trigger.channel.font_color }};"></div>
+            <div class="col-xs-6 recipe_action_channel"
+                 style="background-color: {{ action.channel.color }};
+                        background-image: url({% static action.channel.image %});
+                        color: {{ action.channel.font_color }};"></div>
+            <div class="col-xs-12 recipe_synopsis_edit">
+                <form action="{% url "recipes:new_step7" %}" method="post">
+                    {% csrf_token %}
+                    <textarea id="synopsis" name="synopsis"
+                              class="form-control" rows="5">{{ synopsis }}</textarea>
+                    <span id="synopsis-char-counter" class="help-block"></span>
+                    <button id="recipe-save-btn" type="submit"
+                            class="btn btn-primary btn-sm">{% trans "Save" %}
+                            &nbsp;<i class="fa fa-check-square"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static "js/recipe_synopsis_counter.js" %}"></script>
+{% endblock %}

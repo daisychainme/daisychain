@@ -1,0 +1,62 @@
+[
+    {
+        "model": "core.channel",
+        "fields": {
+            "name": "Github",
+            "color": "#ffffff",
+            "image": "channel_github/github.png",
+            "font_color": "#000000"
+        }
+    },
+    {
+        "model": "core.trigger",
+        "fields": {
+            "channel": ["Github"],
+            "name": "Push to Repository",
+            "trigger_type": 100
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Github", 100],
+            "name": "head_commit_message",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Github", 100],
+            "name": "head_commit_author",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Github", 100],
+            "name": "repository_name",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Github", 100],
+            "name": "repository_url",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerInput",
+        "fields": {
+            "trigger": ["Github", 100],
+            "name": "repository_name"
+        }
+    }
+]

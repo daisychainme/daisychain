@@ -1,0 +1,33 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "recipes/css/style.css" %}" rel="stylesheet">
+    <div class="row">
+        <h1>{% trans "Do you really want to delete this recipe?" %}</h1>
+    </div>
+    <div class="row recipe_view">
+        <div class="col-md-offset-2 col-md-4 col-sm-6 recipe_trigger_channel"
+             style="background-color: {{ recipe.trigger.channel.color }}; background-image: url({% static recipe.trigger.channel.image %}); color: {{ recipe.trigger.channel.font_color }};">
+             <div class="recipe_type">{{ recipe.trigger.name }}</div>
+        </div>
+        <div class="col-md-4 col-sm-6 recipe_action_channel"
+             style="background-color: {{ recipe.action.channel.color }}; background-image: url({% static recipe.action.channel.image %}); color: {{ recipe.action.channel.font_color }};">
+             <div class="recipe_type">{{ recipe.action.name }}</div>
+        </div>
+    </div>
+    <form action="{% url "recipes:delete" recipe.id %}" method="post">
+        {% csrf_token %}
+        <div class="col-6">
+            <button class="btn btn-primary"
+                    name="action"
+                    value="keep">No! I want to keep it!</button>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-danger"
+                    name="action"
+                    value="delete">Yes, delete</button>
+        </div>
+    </form>
+
+{% endblock %}

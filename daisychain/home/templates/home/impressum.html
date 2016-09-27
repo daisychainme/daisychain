@@ -1,0 +1,70 @@
+{% extends '_base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% blocktrans %}Legal Disclosure{% endblocktrans %}</h1>
+<address>
+    <strong>Daisychain.me</strong><br />
+    {% blocktrans %}Lehrstuhl für Informatik 1{% endblocktrans %}<br />
+    {% blocktrans %}Universität Erlangen-Nürnberg{% endblocktrans %}<br />
+    Martensstr. 3<br />
+    91058 Erlangen<br />
+    Germany<br />
+    {% blocktrans %}Phone: +49 9131 85 69900{% endblocktrans %}<br />
+    {% blocktrans %}Fax: +49 9131 85 69919{% endblocktrans %}<br />
+    {% blocktrans %}Mail: info@daisychain.me{% endblocktrans %}
+</address>
+<div class="panel-group" id="impressum">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#content">{% blocktrans %}Accountability for content{% endblocktrans %}</a>
+            </h4>
+        </div>
+        <div id="content" class="panel-collapse collapse in">
+            <div class="panel-body">{% blocktrans %}The contents of our pages have been created with the utmost care. However, we cannot guarantee the contents' accuracy, completeness or topicality. According to statutory provisions, we are furthermore responsible for our own content on these web pages. In this context, please note that we are accordingly not obliged to monitor merely the transmitted or saved information of third parties, or investigate circumstances pointing to illegal activity. Our obligations to remove or block the use of information under generally applicable laws remain unaffected by this as per §§ 8 to 10 of the Telemedia Act (TMG).{% endblocktrans %}</div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#links">{% blocktrans %} Accountability for links{% endblocktrans %}</a>
+            </h4>
+        </div>
+        <div id="links" class="panel-collapse collapse in">
+            <div class="panel-body">{% blocktrans %}Responsibility for the content of external links (to web pages of third parties) lies solely with the operators of the linked pages. No violations were evident to us at the time of linking. Should any legal infringement become known to us, we will remove the respective link immediately.{% endblocktrans %}</div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#links">{% blocktrans %}Copyright{% endblocktrans %}</a>
+            </h4>
+        </div>
+        <div id="links" class="panel-collapse collapse in">
+            <div class="panel-body">{% blocktrans %}Our web pages and their contents are subject to German copyright law. Unless expressly permitted by law (§ 44a et seq. of the copyright law), every form of utilizing, reproducing or processing works subject to copyright protection on our web pages requires the prior consent of the respective owner of the rights. Individual reproductions of a work are allowed only for private use, so must not serve either directly or indirectly for earnings. Unauthorized utilization of copyrighted works is punishable (§ 106 of the copyright law).{% endblocktrans %}</div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#privacy">{% blocktrans %}Privacy Policy{% endblocktrans %}</a>
+            </h4>
+        </div>
+        <div id="privacy" class="panel-collapse collapse in">
+            <div class="panel-body">{% blocktrans %}Read more about we use your data here ...{% endblocktrans %} <a href="{% url 'home:privacypolicy' %}">{% blocktrans %}Our Privacy policy{% endblocktrans %}</a></div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#template">{% blocktrans %}Template License{% endblocktrans %}</a>
+            </h4>
+        </div>
+        <div id="template" class="panel-collapse collapse in">
+            <div class="panel-body">{% blocktrans %}Special thanks for our reference template going to<br />
+                <a rel="cc:attributionURL" href="http://www.andreagalanti.it/flatfy" property="dc:title">Flatfy Theme </a> by <a rel="dc:creator" href="http://www.andreagalanti.it" property="cc:attributionName">Andrea Galanti</a> is licensed to the public under <br />the <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/it/deed.it">Creative Commons Attribution 3.0 License - NOT COMMERCIAL</a>.{% endblocktrans %}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

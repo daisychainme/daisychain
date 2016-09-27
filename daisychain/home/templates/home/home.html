@@ -1,0 +1,17 @@
+	{% load i18n %}
+	<h1>Welcome {{user.username}}</h1><br/>
+	{% blocktrans %}
+	<p><a href="https://www.daisychain.me">Daisychain</a> connects web services to make your life easier.</p><p>Daisychain is an open-source alternative for IFTTT. It is not only easy to use, but also easy to extend, easy to configure, and easy to be hosted on your own server.
+	That way you do not have to trust some third-party closed-source service. You always own your data. You will never have to guess what is going on under the hood.</p>{% endblocktrans %}
+	<h3>{% trans "Still under development!" %}</h3>
+	{% blocktrans %}Does sometimes, something not working right or if you find any bugs. Please send us a Mail!{% endblocktrans %}<br /><a href="mailto:problems@daisychain.me" class="btn btn-default btn-embossed"><span class="glyphicon glyphicon-envelope"></span>{% trans "Contact Support" %}</a>
+	<h3>{% trans "Looking for news?" %}</h3>
+	{% trans "Check out our blog!" %}<br /><a class="btn btn-primary btn-embossed" href="https://www.daisychain.me/blog">{% trans "Daisychain Blog" %}</a>
+	<h3>{% trans "Today you can do ..." %}</h3>
+	<a class="btn btn-primary btn-embossed" href="{% url 'account_change_password' %}">{% trans "Change your Password" %}</a>
+	<a class="btn btn-primary btn-embossed" href="{% url "account_email" %}">
+            {% trans "Change mail" %}
+        </a>
+	<a class="btn btn-primary btn-embossed" href="{% url 'channels:list' %}">{% trans "Channels" %}</a>
+	<a class="btn btn-primary btn-embossed" href="{% url 'recipes:list' %}">{% trans "See/Edit your Recipes" %}</a>
+

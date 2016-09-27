@@ -1,0 +1,61 @@
+{
+    "channel": "channel_instagram.channel.InstagramChannel"
+    "triggers": [{
+        "name": "New Photo by you",
+        "type": 100,
+        "inputs": {},
+        "outputs": {
+            "caption": "text/plain",
+            "url": "text/plain",
+            "image_standard": "image/jpg",
+            "image_low": "image/jpg",
+            "thumbnail": "image/jpg"
+        }
+    },{
+        "name": "New Photo by you with specific hashtag",
+        "type": 101
+        "inputs": {
+            "hashtag": "text/plain"
+        },
+        "outputs": {
+            "caption": "text/plain",
+            "caption_without_hashtags": "text/plain",
+            "url": "text/plain",
+            "image_standard": "image/jpg",
+            "image_low": "image/jpg",
+            "thumbnail": "image/jpg"
+        }
+    },{
+        "name": "New Video by you",
+        "type": 200
+        "inputs": {},
+        "outputs": {
+            "caption": "text/plain",
+            "url": "text/plain",
+            "video_standard": "video/mp4",
+            "video_low": "video/mp4",
+            "video_low_bandwidth": "video/mp4"
+            "cover_image_standard": "image/jpg",
+            "cover_image_low": "image/jpg",
+            "cover_image_thumbnail": "image/jpg",
+        }
+    },{
+        "name": "New Video by you with specific hashtag",
+        "type": 201
+        "inputs": {
+            "hashtag": "text/plain"
+        },
+        "outputs": {
+            "caption": "text/plain",
+            "caption_without_hashtags": "text/plain",
+            "url": "text/plain",
+            "video_standard": "video/mp4",
+            "video_low": "video/mp4",
+            "video_low_bandwidth": "video/mp4"
+            "cover_image_standard": "image/jpg",
+            "cover_image_low": "image/jpg",
+            "cover_image_thumbnail": "image/jpg",
+        }
+    }],
+    "actions": []
+}

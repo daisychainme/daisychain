@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% trans "Dashboard" %}</h1>
+    <h2>{% trans "Welcome " %}{{ user.username }}</h2>
+    <div class="row">
+<div data-animation-delay="200" class="col-sm-6 wow fadeInLeftBig animated animated" style="visibility: visible;">
+<h3 class="section-heading">Your Data</h3>
+<p class="lead">Whe know ...
+</p>
+<ul class="descp lead2">
+<li><i class="fa fa-envelope"></i> {{user.email}}</li>
+<li><i class="fa fa-signin-in"></i>{% trans "Last login:" %}{{user.last_login}}</li>
+</ul>
+        <a class="btn btn-primary btn-embossed" href="{% url "account_email" %}">
+            {% trans "Change mail" %}
+        </a>
+        <a class="btn btn-primary btn-embossed" href="{% url "account_change_password" %}">
+            {% trans "Change password" %}
+        </a>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'recipes/recipe_create.step3.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block trigger_inputs %}
+<form action="/rss/trigger-input" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock trigger_inputs %}

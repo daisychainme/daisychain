@@ -1,0 +1,373 @@
+[
+    {
+        "model": "core.Channel",
+        "fields": {
+            "name": "Dropbox",
+            "color": "#007ee5",
+            "image": "channel_dropbox/dropbox.png",
+            "font_color" : "#FFFFFF"
+        }
+    },
+    {
+        "model":"core.trigger",
+        "fields": {
+            "name": "New Files, or Files modified",
+            "channel": ["Dropbox"],
+            "trigger_type": 1
+        }
+    },
+    {
+        "model":"core.trigger",
+        "fields": {
+            "name": "New Media",
+            "channel": ["Dropbox"],
+            "trigger_type": 2
+        }
+    },
+    {
+        "model":"core.trigger",
+        "fields": {
+            "name": "New Audio",
+            "channel": ["Dropbox"],
+            "trigger_type": 3
+        }
+    },
+    {
+        "model":"core.trigger",
+        "fields": {
+            "name": "New Shared File",
+            "channel": ["Dropbox"],
+            "trigger_type": 4
+        }
+    },
+    {
+        "model":"core.trigger",
+        "fields": {
+            "name": "UserInfo changed",
+            "channel": ["Dropbox"],
+            "trigger_type": 5
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "path",
+            "trigger": ["Dropbox", 1],
+            "mime_type": "text",
+            "example_value" : "/dropbox/folder/changed_file.pdf"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "url",
+            "trigger": ["Dropbox", 1],
+            "mime_type": "text",
+            "example_value" : "https://dl.dropboxusercontent.com/apitl/1/AAA_lBpdR"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "size",
+            "trigger": ["Dropbox", 1],
+            "mime_type": "text",
+            "example_value" : "150 Bytes"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "modified",
+            "trigger": ["Dropbox", 1],
+            "mime_type": "text",
+            "example_value" : "last modified: 2016-05-16 22:30:05"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "data",
+            "trigger": ["Dropbox", 1],
+            "mime_type": "data",
+            "example_value" : "file.pdf"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "path",
+            "trigger": ["Dropbox", 2],
+            "mime_type": "text",
+            "example_value" : "path/to/media"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "url",
+            "trigger": ["Dropbox", 2],
+            "mime_type": "text",
+            "example_value" : "https://dl.dropboxusercontent.com/apitl/1/AAA_lBpdR"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "size",
+            "trigger": ["Dropbox", 2],
+            "mime_type": "text",
+            "example_value" : "2MB"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "modified",
+            "trigger": ["Dropbox", 2],
+            "mime_type": "text",
+            "example_value" : "last modified: 2016-05-16 22:30:05"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "jpg",
+            "trigger": ["Dropbox", 2],
+            "mime_type": "image",
+            "example_value" : "photo.jpg"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "png",
+            "trigger": ["Dropbox", 2],
+            "mime_type": "image",
+            "example_value" : "pic.png"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "video",
+            "trigger": ["Dropbox", 2],
+            "mime_type": "video",
+            "example_value" : "video.mp4"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "audio",
+            "trigger": ["Dropbox", 3],
+            "mime_type": "audio",
+            "example_value" : "music.mp3"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "path",
+            "trigger": ["Dropbox", 3],
+            "mime_type": "text",
+            "example_value" : "/get/path_to/audio-file/music.mp3"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "url",
+            "trigger": ["Dropbox", 3],
+            "mime_type": "text",
+            "example_value" : "https://dl.dropboxusercontent.com/apitl/1/AAA_lBpdR"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "size",
+            "trigger": ["Dropbox", 3],
+            "mime_type": "text",
+            "example_value" : "2MB"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "modified",
+            "trigger": ["Dropbox", 3],
+            "mime_type": "text",
+            "example_value" : "last modified: 2016-05-16 22:30:05"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "shared_file",
+            "trigger": ["Dropbox", 4],
+            "mime_type": "application",
+            "example_value" : "shared_file.pdf"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "path",
+            "trigger": ["Dropbox", 4],
+            "mime_type": "text",
+            "example_value" : "/get/path_to/shared-file/shared_file.pdf"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "url",
+            "trigger": ["Dropbox", 4],
+            "mime_type": "text",
+            "example_value" : "https://dl.dropboxusercontent.com/apitl/1/AAA_lBpdR"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "size",
+            "trigger": ["Dropbox", 4],
+            "mime_type": "text",
+            "example_value" : "2MB"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "modified",
+            "trigger": ["Dropbox", 4],
+            "mime_type": "text",
+            "example_value" : "last modified: 2016-05-16 22:30:05"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "display_name",
+            "trigger": ["Dropbox", 5],
+            "mime_type": "text",
+            "example_value" : "John Doe"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "email",
+            "trigger": ["Dropbox", 5],
+            "mime_type": "text",
+            "example_value" : "john.doe@example_value.org"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "profile_photo_url",
+            "trigger": ["Dropbox", 5],
+            "mime_type": "text",
+            "example_value" : "www.dl.dropbox.com/url_to_profile_photo_46a4sd6as4d"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "disk_used",
+            "trigger": ["Dropbox", 5],
+            "mime_type": "text",
+            "example_value" : "1.2434 MB"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "disk_allocated",
+            "trigger": ["Dropbox", 5],
+            "mime_type": "text",
+            "example_value" : "2147.4836 MB"
+        }
+    },
+    {
+        "model": "core.TriggerInput",
+        "fields": {
+            "name": "filename",
+            "trigger": ["Dropbox", 1]
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Upload a file",
+            "channel": ["Dropbox"],
+            "action_type": 100
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Download a file",
+            "channel": ["Dropbox"],
+            "action_type": 200
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Download File to specific destination",
+            "channel": ["Dropbox"],
+            "action_type": 300
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "data",
+            "action": ["Dropbox", 100],
+            "mime_type": "application"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "path",
+            "action": ["Dropbox", 100],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "overwrite",
+            "action": ["Dropbox", 100],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "path",
+            "action": ["Dropbox", 200],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "path_to",
+            "action": ["Dropbox", 300],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "path_from",
+            "action": ["Dropbox", 300],
+            "mime_type": "text"
+        }
+    }
+]

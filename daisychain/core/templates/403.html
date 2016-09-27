@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h1>
+                    Oops!</h1>
+                <h2>
+                    {% trans "403 Forbidden!" %}</h2>
+                <div class="error-details">
+                    {% trans "You're not coming in!" %}
+                </div>
+                <div class="error-actions">
+                    <a href="{% url 'home:home' %}" class="btn btn-primary btn-embossed"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a><a href="mailto:problems@daisychain.me" class="btn btn-default btn-embossed"><span class="glyphicon glyphicon-envelope"></span> Contact Support </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

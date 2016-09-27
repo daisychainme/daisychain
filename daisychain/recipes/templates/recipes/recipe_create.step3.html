@@ -1,0 +1,35 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "recipes/css/style.css" %}" rel="stylesheet">
+    <div class="row">
+        <h2>{% trans "Create a new recipe" %}<h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-3 recipe_create--step_header_prev_box">
+            <span class="recipe_create--step_header_prev">{% trans "Select a trigger channel" %}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 recipe_create--step_header_current_box">
+            <h2 class="recipe_create--step_header_current">{% trans "Select a trigger" %}</h2>
+        </div>
+        <div class="col-md-3 col-sm-3 recipe_create--step_header_next_box">
+            <span class="recipe_create--step_header_next">{% trans "Select a action channel" %}</span>
+        </div>
+    </div>
+    <div class="row">
+        {% block trigger_inputs %}
+            <form action="{% url "recipes:new_step3" %}" method="post">
+                {% csrf_token %}
+                {% for input in trigger_inputs %}
+                    <label for="input_{{ input.id }}">{{ input.name }}:</label>
+                    <input type="text"
+                           id="input_{{ input.id }}"
+                           name="input_{{ input.id }}"
+                           value="">
+                {% endfor %}
+                <button type="submit" class="btn btn-default btn-block">Next</button>
+            </form>
+        {% endblock trigger_inputs %}
+    </div>
+{% endblock %}

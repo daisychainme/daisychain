@@ -1,0 +1,15 @@
+{% extends "_base.html" %} {% load i18n %}{% load staticfiles %}
+
+{% block bodystructure %}
+    {% if user.is_authenticated %}
+    {% include 'navigation.html' %}
+    <div class="content-section-b" style="border-top: 0">
+        <div class="container">
+            {% block content %}{% include 'home/home.html' %}{% endblock content %}
+        </div>
+        <!-- /.row -->
+    </div>        
+    {% else %}
+            {% include 'home/landing.html' %}
+    {% endif %}
+{% endblock bodystructure %}

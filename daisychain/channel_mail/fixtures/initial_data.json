@@ -1,0 +1,35 @@
+[
+    {
+        "model": "core.channel",
+        "fields": {
+            "name": "Mail",
+            "color": "#ffffff",
+            "image": "channel_mail/mail.png",
+            "font_color": "#000000"
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Send Mail",
+            "channel": ["Mail"],
+            "action_type": 100
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "subject",
+            "action": ["Mail", 100],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "body",
+            "action": ["Mail", 100],
+            "mime_type": "text"
+        }
+    }
+]

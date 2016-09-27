@@ -1,0 +1,197 @@
+[
+    {
+        "model": "core.Channel",
+        "fields": {
+            "name": "Clock",
+            "color": "#ffa422",
+            "image": "channel_clock/clock.png",
+            "font_color" : "#000000"
+        }
+    },
+    {
+        "model":"core.Trigger",
+        "fields": {
+            "name": "Every day at",
+            "channel": ["Clock"],
+            "trigger_type": 1
+        }
+    },
+    {
+        "model":"core.Trigger",
+        "fields": {
+            "name": "Every hour at",
+            "channel": ["Clock"],
+            "trigger_type": 2
+        }
+    },
+    {
+        "model":"core.Trigger",
+        "fields": {
+            "name": "Every day of the week at",
+            "channel": ["Clock"],
+            "trigger_type": 3
+        }
+    },
+    {
+        "model":"core.Trigger",
+        "fields": {
+            "name": "Every month on the",
+            "channel": ["Clock"],
+            "trigger_type": 4
+        }
+    },
+    {
+        "model":"core.Trigger",
+        "fields": {
+            "name": "Every year on",
+            "channel": ["Clock"],
+            "trigger_type": 5
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Time",
+            "trigger": ["Clock", 1]
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Minutes",
+            "trigger": ["Clock", 2]
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Weekdays",
+            "trigger": ["Clock", 3]
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Time",
+            "trigger": ["Clock", 3]
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Day",
+            "trigger": ["Clock", 4]
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Time",
+            "trigger": ["Clock", 4]
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Date",
+            "trigger": ["Clock", 5]
+        }
+    },
+    {
+        "model":"core.TriggerInput",
+        "fields": {
+            "name": "Time",
+            "trigger": ["Clock", 5]
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "date",
+            "trigger": ["Clock", 1],
+            "mime_type": "text",
+            "example_value" : "October 5th, 2016"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "time",
+            "trigger": ["Clock", 1],
+            "mime_type": "text",
+            "example_value" : "15:45"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "date",
+            "trigger": ["Clock", 2],
+            "mime_type": "text",
+            "example_value" : "October 5th, 2016"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "time",
+            "trigger": ["Clock", 2],
+            "mime_type": "text",
+            "example_value" : "15:45"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "date",
+            "trigger": ["Clock", 3],
+            "mime_type": "text",
+            "example_value" : "October 5th, 2016"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "time",
+            "trigger": ["Clock", 3],
+            "mime_type": "text",
+            "example_value" : "15:45"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "date",
+            "trigger": ["Clock", 4],
+            "mime_type": "text",
+            "example_value" : "October 5th, 2016"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "time",
+            "trigger": ["Clock", 4],
+            "mime_type": "text",
+            "example_value" : "15:45"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "date",
+            "trigger": ["Clock", 5],
+            "mime_type": "text",
+            "example_value" : "October 5th, 2016"
+        }
+    },
+    {
+        "model":"core.TriggerOutput",
+        "fields": {
+            "name": "time",
+            "trigger": ["Clock", 5],
+            "mime_type": "text",
+            "example_value" : "15:45"
+        }
+    }
+]

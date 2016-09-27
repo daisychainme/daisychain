@@ -1,0 +1,91 @@
+[
+    {
+        "model": "core.channel",
+        "fields": {
+            "name": "Twitter",
+            "color": "#55acee",
+            "image": "channel_twitter/logo.png",
+            "font_color": "#ffffff"
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Post Status",
+            "channel": ["Twitter"],
+            "action_type": 100
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Post Image",
+            "channel": ["Twitter"],
+            "action_type": 200
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Update Profile Image",
+            "channel": ["Twitter"],
+            "action_type": 300
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Send Message",
+            "channel": ["Twitter"],
+            "action_type": 400
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "status",
+            "action": ["Twitter", 100],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "status",
+            "action": ["Twitter", 200],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "image",
+            "action": ["Twitter", 200],
+            "mime_type": "image"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields":{
+            "name": "image",
+            "action": ["Twitter", 300],
+            "mime_type": "image"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "text",
+            "action": ["Twitter", 400],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "recipient name",
+            "action": ["Twitter", 400],
+            "mime_type": "text"
+        }
+    }
+]

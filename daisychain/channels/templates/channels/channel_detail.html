@@ -1,0 +1,55 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "channels/css/detail.css" %}" rel="stylesheet">
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="channel_detail--backnav" href="{% url 'channels:list' %}">
+                <i class="fa fa-chevron-left channel_list--auth_badge" aria-hidden="true"></i>
+                {% trans "Channels" %}
+            </a>
+        </div>
+        {% if connection_state == "expired" %}
+        <div class="col-xs-12 alert alert-warning alert-dismissable alert-link" role="alert">
+            {% trans "This channel's connection has expired and does not work right now. Press \"Reconnect\" to use this channel again" %}
+        </div>
+        {% endif %}
+        <div class="col-sm-12 channel_detail--header"
+             style="background-color: {{ channel.color }}; background-image: url({% static channel.image %}); color: {{ channel.font_color }};">
+            <h1>{{ channel.name }}</h1>
+            {% if connection_state == "connected" %}
+            <a href="{{ unauth_url }}"  class="btn btn-sm btn-danger">{% trans "Disconnect" %}</a>
+            {% elif connection_state == "expired" %}
+            <a href="{{ unauth_url }}"  class="btn btn-sm btn-warning">{% trans "Reconnect" %}</a>
+            {% else %}
+            <a href="{{ auth_url }}" class="btn btn-sm btn-primary">{% trans "Connect" %}</a>
+            {% endif %}
+        </div>
+        <div class="col-sm-6">
+            <h2 class="channel_detail--ta_header">{% trans "Triggers" %}</h2>
+            {% if trigger_list %}
+            <ul class="channel_detail--ta_list">
+                {% for trigger in trigger_list %}
+                <li class="channel_detail--trigger">{{ trigger.name }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                {% trans "This Channel offers no triggers." %}
+            {% endif %}
+        </div>
+        <div class="col-sm-6">
+            <h2 class="channel_detail--ta_header">{% trans "Actions" %}</h2>
+            {% if action_list %}
+            <ul class="channel_detail--ta_list">
+                {% for action in action_list %}
+                <li class="channel_detail--action">{{ action.name }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                {% trans "This Channel offers no actions." %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,311 @@
+[
+  {
+    "model": "core.channel",
+    "fields": {
+      "name": "Facebook",
+      "color": "#3b5999",
+      "image": "channel_facebook/fb_logo.png",
+      "font_color": "#ffffff"
+    }
+  },
+  {
+    "model": "core.trigger",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "A new Post by you",
+      "trigger_type": 100
+    }
+  },
+  {
+    "model": "core.trigger",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "A new Photo by you",
+      "trigger_type": 101
+    }
+  },
+  {
+    "model": "core.trigger",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "A new Photo by you with hashtags",
+      "trigger_type": 102
+    }
+  },
+  {
+    "model": "core.trigger",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "A new Link by you",
+      "trigger_type": 103
+    }
+  },
+  {
+    "model": "core.trigger",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "A new Video by you",
+      "trigger_type": 104
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        100
+      ],
+      "name": "message",
+      "mime_type": "text",
+      "example_value": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        100
+      ],
+      "name": "permalink_url",
+      "mime_type": "text",
+      "example_value": "https://www.facebook.com/permalink.php?story_fbid=185614195196746&id=100012444990944"
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        101
+      ],
+      "name": "message",
+      "mime_type": "text",
+      "example_value": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        101
+      ],
+      "name": "permalink_url",
+      "mime_type": "text",
+      "example_value": "https://www.facebook.com/permalink.php?story_fbid=185614195196746&id=100012444990944"
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        101
+      ],
+      "name": "image_standard",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        101
+      ],
+      "name": "image_low",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        102
+      ],
+      "name": "message",
+      "mime_type": "text",
+      "example_value": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        102
+      ],
+      "name": "permalink_url",
+      "mime_type": "text",
+      "example_value": "https://www.facebook.com/permalink.php?story_fbid=185614195196746&id=100012444990944"
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        102
+      ],
+      "name": "image_standard",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        102
+      ],
+      "name": "image_low",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        103
+      ],
+      "name": "message",
+      "mime_type": "text",
+      "example_value": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        103
+      ],
+      "name": "permalink_url",
+      "mime_type": "text",
+      "example_value": "https://www.facebook.com/permalink.php?story_fbid=185614195196746&id=100012444990944"
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        103
+      ],
+      "name": "image_standard",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        103
+      ],
+      "name": "image_low",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        103
+      ],
+      "name": "link",
+      "mime_type": "text",
+      "example_value": "https://example.com"
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        104
+      ],
+      "name": "message",
+      "mime_type": "text",
+      "example_value": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        104
+      ],
+      "name": "permalink_url",
+      "mime_type": "text",
+      "example_value": "https://www.facebook.com/permalink.php?story_fbid=185614195196746&id=100012444990944"
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        104
+      ],
+      "name": "image_standard",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        104
+      ],
+      "name": "image_low",
+      "mime_type": "image",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        104
+      ],
+      "name": "link",
+      "mime_type": "text",
+      "example_value": "https://example.com/path/to/video"
+    }
+  },
+  {
+    "model": "core.TriggerInput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        102
+      ],
+      "name": "hashtag"
+    }
+  }
+]

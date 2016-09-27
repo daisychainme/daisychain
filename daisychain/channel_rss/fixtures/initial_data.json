@@ -1,0 +1,44 @@
+[
+    {
+        "model": "core.channel",
+        "fields": {
+            "name": "RSS",
+            "color": "#ffffff",
+            "image": "channel_rss/rss.png",
+            "font_color": "#000000"
+        }
+    },
+    {
+        "model": "core.trigger",
+        "fields": {
+            "channel": ["RSS"],
+            "name": "New entries",
+            "trigger_type": 100
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["RSS", 100],
+            "name": "summaries",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["RSS", 100],
+            "name": "summaries_and_links",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerInput",
+        "fields": {
+            "trigger": ["RSS", 100],
+            "name": "feed_url"
+        }
+    }
+]

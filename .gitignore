@@ -1,0 +1,15 @@
+*.retry
+*.pyc
+*.sqlite3
+*/htmlcov/*
+.coverage
+virtualenv/
+./Makefile
+selenium/
+share/
+keys.py
+daisychain/assets
+logs
+.idea/
+celerybeat-schedule
+pip-selfcheck.json

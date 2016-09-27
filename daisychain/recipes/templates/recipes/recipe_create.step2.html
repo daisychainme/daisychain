@@ -1,0 +1,35 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "recipes/css/style.css" %}" rel="stylesheet">
+    <div class="row">
+        <h2>{% trans "Create a new recipe" %}<h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-3 recipe_create--step_header_prev_box">
+            <span class="recipe_create--step_header_prev">{% trans "Select a trigger channel" %}</span>
+        </div>
+        <div class="col-md-6 col-sm-6 recipe_create--step_header_current_box">
+            <h2 class="recipe_create--step_header_current">{% trans "Select a trigger" %}</h2>
+        </div>
+        <div class="col-md-3 col-sm-3 recipe_create--step_header_next_box">
+            <span class="recipe_create--step_header_next">{% trans "Select a action channel" %}</span>
+        </div>
+    </div>
+    <div class="row">
+        {% block trigger_selection %}
+            <form action="{% url "recipes:new_step2" %}" method="post">
+            {% csrf_token %}
+            {% for trigger in triggers %}
+                <button type="submit"
+                        name="trigger_id"
+                        value="{{ trigger.id }}"
+                        class="btn btn-default btn-block recipe_create--trigger_btn">{{ trigger.name }}</button>
+            {% empty %}
+            </form>
+                {% trans "Sorry, there are now channels installed, that provide any trigger. Please tell your administrator to install some." %}
+            {% endfor %}
+        {% endblock trigger_selection %}
+    </div>
+{% endblock content %}

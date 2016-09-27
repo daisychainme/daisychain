@@ -1,0 +1,11 @@
+{% extends 'recipes/recipe_create.step3.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block trigger_inputs %}
+<form action="/github/create-trigger-inputs" method="post">
+    {% csrf_token %}
+    {{ form }}
+    {{ repo_error }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock trigger_inputs %}

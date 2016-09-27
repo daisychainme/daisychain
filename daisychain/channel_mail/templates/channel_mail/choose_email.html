@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<form method="POST" action="/mail/choose-email" class="form-horizontal col-md-6">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" name="action">{% trans "Choose Email" %}</button>
+        </div>
+</form>
+
+{% endblock content %}

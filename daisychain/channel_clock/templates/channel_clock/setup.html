@@ -1,0 +1,30 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}
+
+{% block content %}
+    <link href="{% static "channel_clock/chosen/chosen.min.css" %}" rel="stylesheet">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>{% trans "Clock Channel Setup" %}</h1>
+        </div>
+        <div class="col-xs-12">
+            <h2>{% trans "Select your timezone please" %}</h2>
+        </div>
+        <div class="col-xs-12">
+            <form action="{% url "clock:connect" %}" method="post">
+                {% csrf_token %}
+                <select name="offset" id="offset-selection">
+                    {% for timezone in timezones %}
+                    <option value="{{ timezone.offset }}">{{ timezone.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">{% trans "Save" %}</button>
+            </form>
+        </div>
+    </div>
+    <script src="{% static "channel_clock/chosen/chosen.jquery.min.js" %}" rel="text/javascript"></script>
+    <script type="text/javascript">
+        $("#offset-selection").chosen({search_contains: true})
+    </script>
+{% endblock %}
+

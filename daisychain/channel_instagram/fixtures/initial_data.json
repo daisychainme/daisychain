@@ -1,0 +1,115 @@
+[
+    {
+        "model": "core.channel",
+        "fields": {
+            "name": "Instagram",
+            "color": "#ffffff",
+            "image": "channel_instagram/main_icon.png",
+            "font_color": "#000000"
+        }
+    },
+    {
+        "model": "core.trigger",
+        "fields": {
+            "channel": ["Instagram"],
+            "name": "New Photo by you",
+            "trigger_type": 100
+        }
+    },
+    {
+        "model": "core.trigger",
+        "fields": {
+            "channel": ["Instagram"],
+            "name": "New Photo by you with specific hashtag",
+            "trigger_type": 101
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 100],
+            "name": "caption",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 100],
+            "name": "url",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 100],
+            "name": "image_standard",
+            "mime_type": "image",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 100],
+            "name": "image_low",
+            "mime_type": "image",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 101],
+            "name": "caption",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 101],
+            "name": "url",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 101],
+            "name": "image_standard",
+            "mime_type": "image",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 101],
+            "name": "image_low",
+            "mime_type": "image",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["Instagram", 101],
+            "name": "caption_without_hashtags",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerInput",
+        "fields": {
+            "trigger": ["Instagram", 101],
+            "name": "hashtag"
+        }
+    }
+]

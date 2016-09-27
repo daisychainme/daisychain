@@ -1,0 +1,54 @@
+{% extends '_base.html' %}
+{% load i18n %}{% load staticfiles %}{% load humanize %}
+
+{% block content %}
+    <link href="{% static "recipes/css/style.css" %}" rel="stylesheet">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{% trans "Your Recipes" %}</h1>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url "recipes:new" %}"
+               class="btn btn-primary">Create new recipe</a>
+        </div>
+    </div>
+    {% for recipe in recipe_list %}
+    {% if forloop.counter0|divisibleby:2 %}
+    <div class="row recipe_view">
+    {% endif %}
+        <div class="col-sm-6 col-xs-12 recipe">
+            <div class="col-xs-6 recipe_trigger_channel"
+                 style="background-color: {{ recipe.trigger.channel.color }};
+                        background-image: url({% static recipe.trigger.channel.image %});
+                        color: {{ recipe.trigger.channel.font_color }};"></div>
+            <div class="col-xs-6 recipe_action_channel"
+                 style="background-color: {{ recipe.action.channel.color }};
+                        background-image: url({% static recipe.action.channel.image %});
+                        color: {{ recipe.action.channel.font_color }};"></div>
+            <div class="col-xs-12 recipe_synopsis">{{ recipe.synopsis }}</div>
+            <div class="col-xs-12 recipe_options">
+                <span class="recipe_creation_date" title="{{ recipe.creation_date }}">
+                    {% trans "Created" %} {{ recipe.creation_date|naturaltime }}
+                </span>
+                <div class="btn-group" role="group">
+                    <a href="{% url "recipes:edit" recipe.id %}"
+                       class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            {% trans "Edit" %}
+                    </a>
+                    <a href="{% url "recipes:delete" recipe.id %}"
+                       class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            {% trans "Delete" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% if forloop.counter|divisibleby:2 or forloop.last %}
+    </div> <!-- end of .row.recipe_view -->
+    {% endif %}
+    {% empty %}
+        You have no recipes yet. Go create one!
+    {% endfor %}
+
+{% endblock %}

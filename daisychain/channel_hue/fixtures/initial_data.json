@@ -1,0 +1,35 @@
+[
+    {
+        "model": "core.channel",
+        "fields": {
+            "name": "Hue",
+            "color": "#ffffff",
+            "image": "/static/channels/hue.png",
+            "font_color": "#000000"
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Manage Light",
+            "channel": ["Hue"],
+            "action_type": 100
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "light_id",
+            "action": ["Hue", 100],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "state",
+            "action": ["Hue", 100],
+            "mime_type": "text"
+        }
+    }
+]
