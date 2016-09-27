@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TransactionTestCase
 from channel_instagram.views import SESSKEY_OAUTH_NEXT_URI, SESSKEY_OAUTH_VERIFY_TOKEN
+from channel_instagram.models import InstagramAccount
 from django.contrib.auth.models import User
 import json
 import responses
@@ -10,8 +11,8 @@ from urllib.parse import urlsplit, parse_qs
 class OAuthTest(TransactionTestCase):
 
     def setUp(self):
-        max_muster = User.objects.create_user("max_muster")
-        self.client.force_login(max_muster)
+        self.max_muster = User.objects.create_user("max_muster")
+        self.client.force_login(self.max_muster)
 
     def test_get_initial(self):
 
@@ -40,6 +41,15 @@ class OAuthTest(TransactionTestCase):
         self.assertIn(SESSKEY_OAUTH_VERIFY_TOKEN, self.client.session)
         self.assertEqual(self.client.session[SESSKEY_OAUTH_VERIFY_TOKEN],
                          oauth_redir_getParams['verify_token'][0])
+
+    def test_get_initial__already_connected(self):
+
+        InstagramAccount(user=self.max_muster).save()
+        getData = {
+            "next": "/test-redirect-uri/"
+        }
+
+        res = self.client.get(reverse("instagram:connect"), getData)
 
     def test_get_error_callback(self):
 
@@ -149,6 +159,40 @@ class OAuthTest(TransactionTestCase):
                      "https://api.instagram.com/v1/subscriptions",
                      status=200,
                      json={"data": [1]})
+
+            resp.add_callback(
+                    responses.POST,
+                    "https://api.instagram.com/oauth/access_token",
+                    callback=request_callback)
+
+            res = self.client.get(reverse("instagram:connect"), getData)
+
+    @responses.activate
+    def test_get__with_valid_data_account_already_in_used(self):
+
+        def request_callback(request):
+            headers = {}
+            body = json.dumps({
+                "access_token": "123457890",
+                "user": {
+                    "id": "1234567890"
+                }
+            })
+            return (200, headers, body)
+
+        session = self.client.session
+        session[SESSKEY_OAUTH_VERIFY_TOKEN] = "session_token"
+        session.save()
+
+        getData = {
+            "verify_token": "session_token",
+            "code": "code_to_be_checked_by_responses"
+        }
+
+        InstagramAccount(user=self.max_muster,
+                         instagram_id="1234567890").save()
+
+        with responses.RequestsMock() as resp:
 
             resp.add_callback(
                     responses.POST,

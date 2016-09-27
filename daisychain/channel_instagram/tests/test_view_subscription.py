@@ -26,7 +26,7 @@ class SubscriptionTest(TransactionTestCase):
                          instagram_id="1234567890",
                          access_token="1234567890.access.token").save()
 
-        self.url = "/instagram/subscription"
+        self.url = reverse("instagram:subscription")
         self.payload = '[{"changed_aspect": "media", "object": "user", ' \
             '"object_id": "3229602005", "time": 1464723248, ' \
             '"subscription_id": 0, ' \
@@ -50,7 +50,10 @@ class SubscriptionTest(TransactionTestCase):
         res = self.client.get(self.url)
         self.assertEqual(400, res.status_code)
 
-    def test_sendSubscription_correct(self):
+    @patch("channel_instagram.views.SubscriptionView._calculate_signature")
+    def test_sendSubscription_correct(self, mock_calculate_signature):
+
+        mock_calculate_signature.return_value = self.signature
 
         res = self.client.post(self.url,
                                data=self.payload,

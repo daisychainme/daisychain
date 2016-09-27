@@ -216,15 +216,16 @@ class OAuthView(LoginRequiredMixin, RedirectingView):
         # create Instagram model
         try:
             InstagramAccount.objects.get(instagram_id=response['user']['id'])
-            log.info("InstagramAccount already connected")
-            return self.error(request,
-                              type='user',
-                              detail="account_already_connected_to_other_user")
         except InstagramAccount.DoesNotExist:
             log.info("creating InstagramAccount for {}".format(request.user))
             InstagramAccount(user=request.user,
                              instagram_id=response['user']['id'],
                              access_token=response['access_token']).save()
+        else:
+            log.info("InstagramAccount already connected")
+            return self.error(request,
+                              type='user',
+                              detail="account_already_connected_to_other_user")
 
         # add subscription to instagram if not already happened
         log.debug("trying to create subscription")
@@ -290,9 +291,7 @@ class SubscriptionView(View):
         log.debug("payload: {}".format(payload))
 
         # check if request is from instagram by calculating a hash
-        digest = hmac_new(Config.get("CLIENT_SECRET").encode("utf-8"),
-                          msg=payload,
-                          digestmod=sha1).hexdigest()
+        digest = self._calculate_signature(payload)
 
         # check if the calculated hash is the same as sent by instagram
         # return 400 Bad Request if not
@@ -312,3 +311,9 @@ class SubscriptionView(View):
             channel.fire_trigger(trigger)
 
         return HttpResponse()
+
+    def _calculate_signature(self, message):
+
+        return hmac_new(Config.get("CLIENT_SECRET").encode("utf-8"),
+                        msg=message,
+                        digestmod=sha1).hexdigest()
