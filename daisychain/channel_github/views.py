@@ -8,7 +8,6 @@ import requests
 import json
 from uuid import uuid4
 from urllib.parse import urlencode
-from logging import getLogger
 
 from config.keys import keys
 from core.models import Trigger, TriggerInput
@@ -31,7 +30,7 @@ class StartAuthenticationView(LoginRequiredMixin, View):
     def get(self, request):
         callback_url = request.build_absolute_uri(reverse('github:callback'))
         state_string = str(uuid4())
-        scopes = 'user repo gist'
+        scopes = 'repo'
         params = {
                   'client_id': CLIENT_ID,
                   'state': state_string,

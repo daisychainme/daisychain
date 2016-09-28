@@ -1,13 +1,9 @@
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
-
 import json
 import logging
 import requests
 from core.channel import (Channel, NotSupportedTrigger, NotSupportedAction,
                           ConditionNotMet, ChannelStateForUser)
 from core.core import Core
-from config.keys import keys
 from channel_github.models import GithubAccount
 from channel_github.config import (TRIGGER_TYPE, CHANNEL_NAME, CLIENT_ID,
                                    CLIENT_SECRET, TRIGGER_OUTPUT,
