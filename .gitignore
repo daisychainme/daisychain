@@ -8,6 +8,7 @@ virtualenv/
 selenium/
 share/
 keys.py
+settings_production.py
 daisychain/assets
 logs
 .idea/
