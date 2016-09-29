@@ -1,10 +1,12 @@
+from django.contrib.sites.models import Site
 from channel_facebook.config import Config
 from .test_base import FacebookBaseTestCase
 
 
 class ConfigTest(FacebookBaseTestCase):
     def test_set_environment_vars(self):
-        self.assertEqual("www.example.com", Config.get("DOMAIN_BASE"))
+        expected_domain = Site.objects.get_current().domain
+        self.assertEqual(expected_domain, Config.get("DOMAIN_BASE"))
 
     def test_get(self):
         Config.get("API_BASE_URI")

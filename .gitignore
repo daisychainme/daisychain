@@ -9,6 +9,7 @@ selenium/
 share/
 keys.py
 settings_production.py
+daisychain/core/fixtures/initial_data.json
 daisychain/assets
 logs
 .idea/

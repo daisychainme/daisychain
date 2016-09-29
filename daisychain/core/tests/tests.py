@@ -1,4 +1,5 @@
 from django.test import TestCase, RequestFactory
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import resolve, reverse
 from django.http import HttpRequest
 
@@ -166,7 +167,8 @@ class TaskTest(BaseTestCase):
         mock_fill_recipe_mappings.assert_not_called()
 
     def test_get_current_url(self):
-        self.assertEquals(get_local_url(), 'https://www.example.com')
+        domain = 'https://' + Site.objects.get_current().domain
+        self.assertEquals(get_local_url(), domain)
 
     def test_replace_mappings(self):
         mappings = {
