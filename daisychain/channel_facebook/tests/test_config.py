@@ -4,7 +4,7 @@ from .test_base import FacebookBaseTestCase
 
 class ConfigTest(FacebookBaseTestCase):
     def test_set_environment_vars(self):
-        self.assertEqual("localhost.daisychain.me", Config.get("DOMAIN_BASE"))
+        self.assertEqual("www.example.com", Config.get("DOMAIN_BASE"))
 
     def test_get(self):
         Config.get("API_BASE_URI")
