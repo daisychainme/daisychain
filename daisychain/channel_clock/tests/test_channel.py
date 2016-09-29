@@ -1,7 +1,6 @@
 from datetime import datetime
 from mock import patch
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from core.channel import (ConditionNotMet, ChannelStateForUser,
                           NotSupportedTrigger, NotSupportedAction)
@@ -9,15 +8,7 @@ from core.models import Trigger, TriggerInput
 from channel_clock.channel import ClockChannel, TriggerType
 from channel_clock.models import ClockUserSettings
 
-class ModelTest(TestCase):
 
-    def test___str__(self):
-        alice = User.objects.create_user('alice')
-        alice_settings = ClockUserSettings(user=alice, utcoffset=120)
-        expected = "Clock settings for user alice (id={})".format(alice.id)
-        self.assertEqual(expected, str(alice_settings))
-
-# Create your tests here.
 class ChannelTest(TestCase):
     fixtures = ['channel_clock/fixtures/initial_data.json']
 
@@ -175,53 +166,3 @@ class ChannelTest(TestCase):
         actual = self.channel.trigger_synopsis(self.trigger["year"].id,
                                                conditions)
         self.assertEqual(expected, actual)
-
-
-class SetupViewTest(TestCase):
-
-    def setUp(self):
-
-        self.url = reverse("clock:connect")
-
-        max_muster = User.objects.create_user("max_muster")
-        self.client.force_login(max_muster)
-
-    def test_get(self):
-
-        getData = {
-            "next": "/test-redirect-uri/"
-        }
-        res = self.client.get(self.url, getData)
-        res = self.client.get(self.url)
-
-    def test_post__error(self):
-
-        postData = { "offset": 418230471203841723042 }
-        res = self.client.post(self.url, postData)
-
-    def test_post__success(self):
-
-        postData = { "offset": 42 }
-        res = self.client.post(self.url, postData)
-
-
-class ResetViewTest(TestCase):
-
-    def setUp(self):
-
-        self.url = reverse("clock:disconnect")
-
-        self.bob = User.objects.create_user('bob')
-        ClockUserSettings(user=self.bob, utcoffset=120).save()
-
-        self.mallory = User.objects.create_user('mallory')
-
-    def test_get__valid_user(self):
-
-        self.client.force_login(self.bob)
-        res = self.client.get(self.url)
-
-    def test_get__invalid_user(self):
-
-        self.client.force_login(self.mallory)
-        res = self.client.get(self.url)

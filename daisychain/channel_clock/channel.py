@@ -1,28 +1,68 @@
 from datetime import datetime, timedelta, timezone
 from enum import Enum
-from django.utils.translation import ugettext as _
 from django.contrib.humanize.templatetags.humanize import ordinal
 from core.channel import (Channel, NotSupportedTrigger, NotSupportedAction,
                           ConditionNotMet, ChannelStateForUser)
 from core.models import Trigger, TriggerInput
 from core.utils import replace_text_mappings
 from channel_clock.models import ClockUserSettings
-import logging
+from locale import (nl_langinfo,
+                    DAY_1, DAY_2, DAY_3, DAY_4, DAY_5, DAY_6, DAY_7,
+                    MON_1, MON_2, MON_3, MON_4, MON_5, MON_6,
+                    MON_7, MON_8, MON_9, MON_10, MON_11, MON_12)
 
 
 def mockable_now(tz=None):
     return datetime.now(tz=tz)
 
 
-weekday_names = [
-    _('Monday'),
-    _('Tuesday'),
-    _('Wednesday'),
-    _('Thursday'),
-    _('Friday'),
-    _('Saturday'),
-    _('Sunday')
-]
+def weekday_name(weekday):
+
+    weekday = int(weekday)
+
+    if weekday == 0:
+        return nl_langinfo(DAY_2)
+    elif weekday == 1:
+        return nl_langinfo(DAY_3)
+    elif weekday == 2:
+        return nl_langinfo(DAY_4)
+    elif weekday == 3:
+        return nl_langinfo(DAY_5)
+    elif weekday == 4:
+        return nl_langinfo(DAY_6)
+    elif weekday == 5:
+        return nl_langinfo(DAY_7)
+    else: #if weekday == 6:
+        return nl_langinfo(DAY_1)
+
+def month_name(month):
+
+    month = int(month)
+
+    if month == 1:
+        return nl_langinfo(MON_1)
+    elif month == 2:
+        return nl_langinfo(MON_2)
+    elif month == 3:
+        return nl_langinfo(MON_3)
+    elif month == 4:
+        return nl_langinfo(MON_4)
+    elif month == 5:
+        return nl_langinfo(MON_5)
+    elif month == 6:
+        return nl_langinfo(MON_6)
+    elif month == 7:
+        return nl_langinfo(MON_7)
+    elif month == 8:
+        return nl_langinfo(MON_8)
+    elif month == 9:
+        return nl_langinfo(MON_9)
+    elif month == 10:
+        return nl_langinfo(MON_10)
+    elif month == 11:
+        return nl_langinfo(MON_11)
+    else: #if month == 12:
+        return nl_langinfo(MON_12)
 
 
 class TriggerType(Enum):
@@ -151,7 +191,7 @@ class ClockChannel(Channel):
             # TriggerType.every_weekday
             elif trigger_type is TriggerType.every_weekday:
                 wdays = [int(x) for x in conditions["Weekdays"].split(",")]
-                weekdays = [weekday_names[i] for i in wdays]
+                weekdays = [weekday_name(i) for i in wdays]
 
                 weekday_string = weekdays[-1]
 

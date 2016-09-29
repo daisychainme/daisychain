@@ -172,7 +172,7 @@ class RecipeCreateTriggerSelectionView(RecipeCreateBaseView):
             channel_module = importlib.import_module(module_name)
 
             custom_view = getattr(channel_module, 'TriggerSelectionView')()
-            return custom_view.dispatch(request)
+            return custom_view.dispatch(request, draft)
 
         # ImportError => channel- or views-module does not exist
         # AttributeError => There is no custom view defined
@@ -268,7 +268,7 @@ class RecipeCreateTriggerInputView(RecipeCreateBaseView):
             channel_module = importlib.import_module(module_name.lower())
 
             custom_view = getattr(channel_module, 'TriggerInputView')()
-            return custom_view.dispatch(request)
+            return custom_view.dispatch(request, draft)
 
         # ImportError => channel- or views-module does not exist
         # AttributeError => There is no custom view defined
@@ -428,7 +428,7 @@ class RecipeCreateActionSelectionView(RecipeCreateBaseView):
             channel_module = importlib.import_module(module_name)
 
             custom_view = getattr(channel_module, 'ActionSelectionView')()
-            return custom_view.dispatch(request)
+            return custom_view.dispatch(request, draft)
 
         # ImportError => channel- or views-module does not exist
         # AttributeError => There is no custom view defined

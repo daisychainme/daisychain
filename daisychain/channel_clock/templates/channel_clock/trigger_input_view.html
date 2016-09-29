@@ -1,0 +1,82 @@
+{% extends 'recipes/recipe_create.step3.html' %}
+{% load i18n %}{% load staticfiles %}{% load humanize %}
+
+{% block trigger_inputs %}
+    <form action="{% url "recipes:new_step3" %}" method="post">
+        {% csrf_token %}
+
+        {% if "hour" in inputs %}
+            <label for="input_hour">{% trans "Time" %}</label>
+            <select id="input_hour" name="hour">
+                {% for hour in hours %}
+                <option value="{{ hour }}"{% if values.hour == hour %} selected{% endif %}>{{ hour }}</option>
+                {% endfor %}
+            </select>
+        {% endif %}
+
+        {% if "minute" in inputs %}
+            {% if "hour" not in inputs %}
+                <label for="input_minute">{% trans "Minutes" %}</label>
+            {% else %}
+                <label for="input_minute">:</label>
+            {% endif %}
+            <select id="input_minute" name="minute">
+            {% for min in minutes %}
+                <option value="{{ min }}"{% if values.minute == min %} selected{% endif %}>{{ min }}</option>
+            {% endfor %}
+            </select>
+        {% endif %}
+
+        {% if "weekday" in inputs %}
+            <label>{% trans "Weekday" %}</label>
+            {% for weekday in weekdays %}
+            <input type="checkbox"
+                   id="input_weekday_{{ forloop.counter0 }}"
+                   name="weekday"
+                   {% if forloop.counter0 in values.weekday %}
+                       checked
+                   {% endif %}
+                   value="{{ forloop.counter0 }}">
+            <label for="input_weekday_{{ forloop.counter0 }}">{{ weekday }}</label>
+            {% endfor %}
+        {% endif %}
+
+        {% if "day" in inputs %}
+            {% if "month" in inputs %}
+            <label for="input_day">{% trans "Date" %}</label>
+            {% else %}
+            <label for="input_day">{% trans "Day" %}</label>
+            {% endif %}
+            <select id="input_day" name="day">
+            {% if "month" in inputs %}
+                {% for day in alldays %}
+                <option value="{{ day }}"{% if values.day == day %} selected{% endif %}>{{ day | ordinal }}</option>
+                {% endfor %}
+            {% else %}
+                {% for day in days %}
+                <option value="{{ day }}"{% if values.day == day %} selected{% endif %}>{{ day | ordinal }}</option>
+                {% endfor %}
+            {% endif %}
+            </select>
+            {% if "month" not in inputs %}
+            <label for="input_day"> {% trans "of every month" %}</label>
+            {% endif %}
+        {% endif %}
+
+        {% if "month" in inputs %}
+            <select id="input_month" name="month">
+                {% for month in months %}
+                <option value="{{ forloop.counter }}"{% if forloop.counter == values.month %} selected{% endif %}>{{ month }}</option>
+                {% endfor %}
+            </select>
+            <label for="input_month"> {% trans "of every year" %}</label>
+        {% endif %}
+
+        {% if "leapyear" in inputs %}
+            <input type="checkbox" id="input_leapyear" name="leapyear" value="confirmed">
+            <label for="input_leapyear">{% trans "Yes, trigger only on leap days" %}</label>
+        {% endif %}
+
+        <button type="submit" class="btn btn-default btn-block">Next</button>
+    </form>
+{% endblock trigger_inputs %}

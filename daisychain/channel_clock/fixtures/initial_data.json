@@ -3,7 +3,7 @@
         "model": "core.Channel",
         "fields": {
             "name": "Clock",
-            "color": "#ffa422",
+            "color": "#f48d00",
             "image": "channel_clock/clock.png",
             "font_color" : "#000000"
         }
