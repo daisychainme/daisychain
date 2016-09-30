@@ -22,8 +22,10 @@
             <a href="{{ unauth_url }}"  class="btn btn-sm btn-danger">{% trans "Disconnect" %}</a>
             {% elif connection_state == "expired" %}
             <a href="{{ unauth_url }}"  class="btn btn-sm btn-warning">{% trans "Reconnect" %}</a>
-            {% else %}
+            {% elif connection_state == "initial" %}
             <a href="{{ auth_url }}" class="btn btn-sm btn-primary">{% trans "Connect" %}</a>
+            {% else %}
+            <button class="btn btn-sm btn-success" disabled>{% trans "Connected" %}</a>
             {% endif %}
         </div>
         <div class="col-sm-6">

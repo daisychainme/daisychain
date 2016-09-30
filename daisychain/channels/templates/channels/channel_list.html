@@ -12,7 +12,7 @@
            href="{{ channel.detail_link }}"
            style="background-color: {{ channel.color }}; background-image: url({% static channel.image %}); color: {{ channel.font_color }};">
             <div class="channel_list--channel_name">{{ channel.name }}</div>
-            {% if channel.connection_state == "connected" %}
+            {% if channel.connection_state == "connected" or channel.connection_state == "unnecessary" %}
             <div class="channel_list--auth_ribbon--connected">
                 <span class="channel_list-auth_text">{% trans "Connected" %}</span>
                 <i class="fa fa-link channel_list--auth_badge" aria-hidden="true"></i>
