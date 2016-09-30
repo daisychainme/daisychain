@@ -10,8 +10,8 @@
     height: 270px;
     padding: 180px .5em 0;
     background-repeat: no-repeat;
-    background-size: 90px;
-    background-position: 45px 45px;
+    background-size: auto 90px;
+    background-position: center 45px;
     text-align: center;
 }
 .channel_list--auth_ribbon--connected,

@@ -4,7 +4,7 @@
         "fields": {
             "name": "Hue",
             "color": "#ffffff",
-            "image": "/static/channels/hue.png",
+            "image": "channel_hue/hue.png",
             "font_color": "#000000"
         }
     },

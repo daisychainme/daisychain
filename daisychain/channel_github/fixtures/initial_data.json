@@ -4,7 +4,7 @@
         "fields": {
             "name": "Github",
             "color": "#ffffff",
-            "image": "channel_github/github.png",
+            "image": "channel_github/octocat.png",
             "font_color": "#000000"
         }
     },
