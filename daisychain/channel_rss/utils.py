@@ -111,3 +111,32 @@ def _parse_feed_if_necessary(feed):
     if type(feed) is str:
         feed = feedparser.parse(feed)
     return feed
+
+
+def entries_by_keyword(feed, keyword, date=None):
+    """
+
+    Args:
+        feed:
+        keyword:
+
+    Returns:
+
+    """
+    feed = _parse_feed_if_necessary(feed)
+    if date:
+        entries = entries_since(feed, date)
+    else:
+        entries = feedparser.parse(feed)['entries']
+
+    # filter to get entries containing keyword
+    filtered = filter(lambda x: keyword in x['title']
+                                or keyword in x['summary'],
+                      entries)
+    return [e for e in filtered]
+
+
+
+
+
+
