@@ -50,7 +50,7 @@ def entries_since(feed, date):
     return [e for e in entries if e['updated_parsed'] > date]
 
 
-def build_string_from_entries(feed, *args, since=None):
+def build_string_from_entries(feed, *args, since=None, keyword=None):
     """
     Retrieves fields for every entry in the feed.
 
@@ -58,16 +58,19 @@ def build_string_from_entries(feed, *args, since=None):
         feed: URL to the feed or FeedParser representing the parsed feed.
         since: time_struct specifying the oldest date for which a feed entry
             should be considered. (optional)
+        keyword:
         *args: Names of the fields to retrieve.
 
     Returns:
         All specified fields for every entry.
     """
-    feed = _parse_feed_if_necessary(feed)
-    if since:
+    if keyword:
+        entries = entries_by_keyword(feed, keyword=keyword, since=since)
+    elif since:
         entries = entries_since(feed, since)
     else:
-        entries = [e for e in feed.entries]
+        feed = _parse_feed_if_necessary(feed)
+        entries = feed.entries
     result_string = ""
     for entry in entries:
         for field in args:
@@ -113,20 +116,20 @@ def _parse_feed_if_necessary(feed):
     return feed
 
 
-def entries_by_keyword(feed, keyword, date=None):
+def entries_by_keyword(feed, keyword, since=None):
     """
 
     Args:
         feed:
         keyword:
-        date:
+        since:
 
     Returns:
 
     """
     feed = _parse_feed_if_necessary(feed)
-    if date:
-        entries = entries_since(feed, date)
+    if since:
+        entries = entries_since(feed, since)
     else:
         entries = feed['entries']
 
