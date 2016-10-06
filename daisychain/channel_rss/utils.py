@@ -119,6 +119,7 @@ def entries_by_keyword(feed, keyword, date=None):
     Args:
         feed:
         keyword:
+        date:
 
     Returns:
 
@@ -127,13 +128,13 @@ def entries_by_keyword(feed, keyword, date=None):
     if date:
         entries = entries_since(feed, date)
     else:
-        entries = feedparser.parse(feed)['entries']
+        entries = feed['entries']
 
     # filter to get entries containing keyword
-    filtered = filter(lambda x: keyword in x['title']
-                                or keyword in x['summary'],
+    filtered = filter(lambda x: keyword.lower() in x['title'].lower()
+                                or keyword.lower() in x['summary'].lower(),
                       entries)
-    return [e for e in filtered]
+    return list(filtered)
 
 
 
