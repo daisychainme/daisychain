@@ -65,7 +65,7 @@ def build_string_from_entries(feed, *args, since=None, keyword=None):
         All specified fields for every entry.
     """
     if keyword:
-        entries = entries_by_keyword(feed, keyword=keyword, since=since)
+        entries = entries_by_keyword(feed=feed, keyword=keyword, since=since)
     elif since:
         entries = entries_since(feed, since)
     else:

@@ -3,6 +3,7 @@ import logging
 from core.channel import (Channel, NotSupportedTrigger, NotSupportedAction,
                           ConditionNotMet, ChannelStateForUser)
 from core.utils import replace_text_mappings
+from core.models import (RecipeCondition, Recipe, TriggerInput)
 from channel_rss.config import TRIGGER_TYPE
 
 
@@ -36,3 +37,48 @@ class RssChannel(Channel):
         Always returns unnecessary.
         """
         return ChannelStateForUser.unnecessary
+
+    def fetch_entries_by_keyword(self, feed):
+        """
+
+        Args:
+            feed:
+
+        Returns:
+
+        """
+
+        '''
+        get all recipe conditions of a recipe that have the feed url as a
+        recipe condition and that correspond to the trigger input keyword.
+        These recipe conditions are the keywords that condition if a
+        certain recipe is triggered and executed.
+        '''
+        trigger_type = TRIGGER_TYPE['entries_keyword']
+        url_input = TriggerInput.objects.get(trigger__channel__name='RSS',
+                                             trigger__trigger_type=trigger_type,
+                                             name='feed_url')
+        keyword_input = TriggerInput.objects.get(
+                trigger__channel__name='RSS',
+                trigger__trigger_type=trigger_type,
+                name='keyword')
+        # get all conditions of the feeds url
+        url_conditions = RecipeCondition.objects.filter(value=feed.url,
+                                                        trigger_input=url_input)
+
+        for condition in url_conditions:
+            # for each condition get the corresponding recipe
+            # then get the keyword and check for occurrence
+            keyword_cond = RecipeCondition.objects.get(
+                    recipe=condition.recipe,
+                    trigger_input=keyword_input)
+            # TODO check 
+
+
+
+
+
+
+
+
+
