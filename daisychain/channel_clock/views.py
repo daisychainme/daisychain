@@ -16,7 +16,7 @@ DEFAULT_OAUTH_NEXT_URI = "/"
 SESSKEY_OAUTH_NEXT_URI = "clock_oauth_next_uri"
 
 HOURS = range(0, 24)
-MINUTES = ["00", "15", "30", "45"]
+MINUTES = range(0, 60)
 WEEKDAYS = [weekday_name(i) for i in range(0,7)]
 DAYS = range(1, 29)
 ALLDAYS = range(1, 32)
@@ -226,14 +226,14 @@ class EveryHourTriggerInputView(TriggerInputView):
         try:
             minute = self._validate_input(request,
                                           'minute',
-                                          lambda x: x in MINUTES)
+                                          lambda x: int(x) in MINUTES)
         except ValidationException:
             return self._render(request)
         else:
             return self._save_and_redirect(request,
                                            draft,
                                            trigger,
-                                           { "Minutes": int(minute) })
+                                           { "Minutes": minute })
 
 
 class EveryDayTriggerInputView(TriggerInputView):
@@ -247,11 +247,11 @@ class EveryDayTriggerInputView(TriggerInputView):
                                         lambda x: int(x) in HOURS)
             minute = self._validate_input(request,
                                           'minute',
-                                          lambda x: x in MINUTES)
+                                          lambda x: int(x) in MINUTES)
         except ValidationException:
             return self._render(request)
         else:
-            inputs = { "Time": "{}:{}".format(int(hour), int(minute)) }
+            inputs = { "Time": "{}:{}".format(hour, minute) }
             return self._save_and_redirect(request, draft, trigger, inputs)
 
 
@@ -266,7 +266,7 @@ class EveryWeekdayTriggerInputView(TriggerInputView):
                                         lambda x: int(x) in HOURS)
             minute = self._validate_input(request,
                                           'minute',
-                                          lambda x: x in MINUTES)
+                                          lambda x: int(x) in MINUTES)
             message_required = _("Please select at least one weekday")
             weekdays = self._validate_input(request,
                                             'weekday',
@@ -276,7 +276,7 @@ class EveryWeekdayTriggerInputView(TriggerInputView):
             return self._render(request)
         else:
             inputs = {
-                "Time": "{}:{}".format(int(hour), int(minute)),
+                "Time": "{}:{}".format(int(hour), minute),
                 "Weekdays": ",".join(weekdays)
             }
             return self._save_and_redirect(request, draft, trigger, inputs)
@@ -293,14 +293,14 @@ class EveryMonthTriggerInputView(TriggerInputView):
                                         lambda x: int(x) in HOURS)
             minute = self._validate_input(request,
                                           'minute',
-                                          lambda x: x in MINUTES)
+                                          lambda x: int(x) in MINUTES)
             day = self._validate_input(request,
                                        'day',
                                        lambda x: int(x) in DAYS)
         except ValidationException:
             return self._render(request)
         else:
-            inputs = { "Time": "{}:{}".format(int(hour), int(minute)),
+            inputs = { "Time": "{}:{}".format(int(hour), minute),
                        "Day": int(day) }
             return self._save_and_redirect(request, draft, trigger, inputs)
 
@@ -315,7 +315,7 @@ class EveryYearTriggerInputView(TriggerInputView):
                                         lambda x: int(x) in HOURS)
             minute = self._validate_input(request,
                                           'minute',
-                                          lambda x: x in MINUTES)
+                                          lambda x: int(x) in MINUTES)
             day = self._validate_input(request,
                                        'day',
                                        lambda x: int(x) in ALLDAYS)
@@ -356,7 +356,7 @@ class EveryYearTriggerInputView(TriggerInputView):
                 return self._render(request)
 
             inputs = {
-                "Time": "{}:{}".format(int(hour), int(minute)),
+                "Time": "{}:{}".format(int(hour), minute),
                 "Date": "{}-{}".format(int(month), int(day))
             }
             return self._save_and_redirect(request, draft, trigger, inputs)

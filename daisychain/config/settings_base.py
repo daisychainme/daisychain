@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 import django
 from datetime import timedelta
+from celery.schedules import crontab
 
 from config.keys import keys
 from config.host import SITE_ID
@@ -178,7 +179,7 @@ CELERYBEAT_SCHEDULE = {
     },
     'clock_channel': {
         'task': 'channel_clock.tasks.beat',
-        'schedule': timedelta(minutes=15),
+        'schedule': crontab()
     }
 }
 # #######################

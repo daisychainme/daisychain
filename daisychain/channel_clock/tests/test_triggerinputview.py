@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from mock import MagicMock, patch
 from unittest import skip
 from channel_clock.views import (TriggerInputView, RequiredInputMissing,
-                                 InputInvalid)
+                                 InputInvalid, TriggerInputView)
 from core.models import Channel, Trigger, TriggerInput
 from recipes.tests.test_utils import RecipeTestCase
 
@@ -29,6 +29,22 @@ class BaseViewTestCase(RecipeTestCase):
 
 
 class TriggerInputViewTest(BaseViewTestCase):
+
+    @patch("channel_clock.views.redirect")
+    @patch("django.contrib.messages.error")
+    def test_dispatch__trigger_does_not_exist(self, mock_error, mock_redirect):
+
+        request = "test_request_not_used"
+        draft = { 'trigger_id': -99 }
+
+        TriggerInputView().dispatch(request, draft)
+
+        mock_error.assert_called_once_with(
+                request,
+                "The selected trigger does not exist")
+
+        mock_redirect.assert_called_once_with("recipes:new_step2")
+
 
     def test_dispatch__valid_trigger_types(self):
 
@@ -210,7 +226,7 @@ class EveryDayTriggerInputViewTest(BaseViewTestCase):
         })
         data = {
             "hour": "13",
-            "minute": "37"
+            "minute": "60"
         }
 
         res = self.client.post(self.url, data=data)
@@ -241,7 +257,7 @@ class EveryHourTriggerInputViewTest(BaseViewTestCase):
             'trigger_channel_id': self.channel.id,
             'trigger_id': trigger.id
         })
-        data = { "minute": "37" }
+        data = { "minute": "60" }
 
         res = self.client.post(self.url, data=data)
 
@@ -296,7 +312,7 @@ class EveryWeekdayTriggerInputViewTest(BaseViewTestCase):
         })
         data = {
             "hour": "15",
-            "minute": "37",
+            "minute": "60",
             "weekday": ("1", "3", "5")
         }
 
@@ -372,7 +388,7 @@ class EveryMonthTriggerInputViewTest(BaseViewTestCase):
         })
         data = {
             "hour": "15",
-            "minute": "37",
+            "minute": "60",
             "day": "28"
         }
 
@@ -450,7 +466,7 @@ class EveryYearTriggerInputViewTest(BaseViewTestCase):
         })
         data = {
             "hour": "15",
-            "minute": "37",
+            "minute": "60",
             "day": "28",
             "month": "7"
         }

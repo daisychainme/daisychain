@@ -9,6 +9,7 @@ class ClockUserSettings(models.Model):
     utcoffset = models.SmallIntegerField(_("UTC Offset in minutes"))
 
     class Meta:
+        app_label = "channel_clock"
         verbose_name = _("Clock User Settings")
         verbose_name_plural = _("Clock User Settings")
 

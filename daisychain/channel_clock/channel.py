@@ -91,27 +91,26 @@ class ClockChannel(Channel):
         user_timezone = timezone(timedelta(minutes=offset))
         current_datetime = mockable_now(tz=user_timezone)
 
-        # 0-7 => 0; 8-22 => 15; 23-37 => 30; 38-52 => 45; 53-59 => 0
-        minutes_rounded = (current_datetime.minute+7) // 15 * 15 % 60
-        time_for_condition = "{}:{}".format(current_datetime.hour,
-                                            minutes_rounded)
-
         # check if trigger is valid
         try:
-            TriggerType(trigger_type)
+            trigger_type = TriggerType(trigger_type)
         except ValueError:
             raise NotSupportedTrigger
 
+        # 0-7 => 0; 8-22 => 15; 23-37 => 30; 38-52 => 45; 53-59 => 0
+        minutes = current_datetime.minute
+        time_for_condition = "{}:{}".format(current_datetime.hour,
+                                            str(minutes).rjust(2, '0'))
 
         # check for "Minutes" condition of TriggerType.every_hour
         if trigger_type is TriggerType.every_hour:
-            if conditions["Minutes"] != str(minutes_rounded):
-                raise ConditionNotMet
+            if int(conditions["Minutes"]) != minutes:
+                raise ConditionNotMet("minutes not met")
 
         # check for "Time" condition of all other TriggerTypes
         else:
             if conditions["Time"] != time_for_condition:
-                raise ConditionNotMet
+                raise ConditionNotMet("time not met")
 
             # no further check for TriggerType.every_day, but recognize it
             if trigger_type is TriggerType.every_day:
@@ -121,17 +120,17 @@ class ClockChannel(Channel):
             elif trigger_type is TriggerType.every_weekday:
                 weekday_list = conditions["Weekdays"].split(",")
                 if str(current_datetime.weekday()) not in weekday_list:
-                    raise ConditionNotMet
+                    raise ConditionNotMet("weekday not met")
 
             # check for "Day" condition of TriggerType.every_month
             elif trigger_type is TriggerType.every_month:
                 if conditions["Day"] != str(current_datetime.day):
-                    raise ConditionNotMet
+                    raise ConditionNotMet("day not met")
 
             # check for "Date" condition of TriggerType.every_year
             else: # if trigger_type is TriggerType.every_year
                 if conditions["Date"] != current_datetime.strftime("%m-%d"):
-                    raise ConditionNotMet
+                    raise ConditionNotMet("date not met")
 
         # Format TriggerOutput values
         current_date = current_datetime.strftime("%x")
