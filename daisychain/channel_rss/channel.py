@@ -65,14 +65,16 @@ class RssChannel(Channel):
         # get all conditions of the feeds url
         url_conditions = RecipeCondition.objects.filter(value=feed.url,
                                                         trigger_input=url_input)
+        # TODO: fetch rss feed
 
         for condition in url_conditions:
-            # for each condition get the corresponding recipe
-            # then get the keyword and check for occurrence
+            # for each condition get the keyword via the corresponding recipe
             keyword_cond = RecipeCondition.objects.get(
                     recipe=condition.recipe,
                     trigger_input=keyword_input)
-            # TODO check 
+            # TODO check for occurence / get the entries
+            # TODO build strings, fill payoad
+            # TODO fire trigger
 
 
 
