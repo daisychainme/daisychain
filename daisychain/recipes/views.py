@@ -9,6 +9,7 @@ from django.views.generic import View
 import importlib
 
 from .util import Draft
+from core.channel import ChannelStateForUser
 from core.models import (Channel,
                          Trigger, TriggerInput, TriggerOutput,
                          Action, ActionInput,
@@ -97,7 +98,8 @@ class RecipeCreateTriggerChannelSelectionView(RecipeCreateBaseView):
 
         # check if user is connected and redirect if not
         trigger_channel = get_channel_instance(channel.name)
-        if trigger_channel.user_is_connected(request.user):
+        user_state = trigger_channel.user_is_connected(request.user)
+        if user_state == ChannelStateForUser.connected:
             return redirect("recipes:new_step2")
         else:
             # send user to channel authentication. Should just pass through
@@ -357,7 +359,8 @@ class RecipeCreateActionChannelSelectionView(RecipeCreateBaseView):
 
         # check if user is connected and redirect if not
         action_channel = get_channel_instance(channel.name)
-        if action_channel.user_is_connected(request.user):
+        user_state = action_channel.user_is_connected(request.user)
+        if user_state == ChannelStateForUser.connected:
             return redirect("recipes:new_step5")
         else:
             # send user to channel authentication. Should just pass through
@@ -393,6 +396,7 @@ class RecipeCreateActionChannelSelectionView(RecipeCreateBaseView):
         context = {
             "action_channels": applicable_action_channels
         }
+
         return render(request,
                       'recipes/recipe_create.step4.html',
                       context=context)

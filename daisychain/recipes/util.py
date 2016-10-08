@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.http import HttpRequest
 from core.models import (Trigger, TriggerInput,
                          Action, ActionInput,
                          Recipe, RecipeCondition, RecipeMapping)
@@ -40,8 +41,17 @@ class Draft(dict):
 
         def func_wrapper(*args, **kwargs):
 
-            # expect last positional argument to be the request parameter
-            request = args[-1]
+            request = None
+            for arg in args:
+                if isinstance(arg, HttpRequest):
+                    request = arg
+                    break
+
+            if request is None:
+                raise AttributeError("Draft can only decorate methods that "
+                                     "have an argument of type django.http."
+                                     "HttpRequest. No argument of that type"
+                                     " was found.")
 
             draft = Draft(request)
 

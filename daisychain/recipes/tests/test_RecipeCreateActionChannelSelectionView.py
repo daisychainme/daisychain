@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from channel_dropbox.models import DropboxAccount
 from core.models import (Channel, Trigger, Action)
 from .test_utils import TestDataProvider, RecipeTestCase
 
@@ -34,6 +35,8 @@ class RecipeCreateActionChannelSelectionViewTest(RecipeTestCase):
     def test_step4__post_valid_channelid(self):
 
         expectedChannel = Channel.objects.get(name="Dropbox")
+
+        DropboxAccount.objects.create(user=self.user)
 
         sessionTrigger = Trigger.objects.get(channel__name="Instagram",
                                              trigger_type=100)
