@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TransactionTestCase
-from channel_instagram.views import SESSKEY_OAUTH_NEXT_URI, SESSKEY_OAUTH_VERIFY_TOKEN
+from channel_instagram.views import (SESSKEY_OAUTH_NEXT_URI,
+                                     SESSKEY_OAUTH_VERIFY_TOKEN)
 from channel_instagram.models import InstagramAccount
 from django.contrib.auth.models import User
 import json

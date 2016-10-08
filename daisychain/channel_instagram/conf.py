@@ -1,16 +1,12 @@
 from config.keys import keys
+from django.contrib.sites.models import Site
 from logging import getLogger
 
 
 log = getLogger("channel")
 
-
 config = {
     "DJANGO_SECRET": keys["DJANGO"]["PRODUCTION"],
-    "CLIENT_ID": keys["INSTAGRAM"]["CLIENT_ID"],
-    "CLIENT_SECRET": keys["INSTAGRAM"]["CLIENT_SECRET"],
-
-    "DOMAIN_BASE": "",
 
     "API_OAUTH_BASE_URI": "https://api.instagram.com/oauth",
     "API_BASE_URI": "https://api.instagram.com/v1",
@@ -23,6 +19,16 @@ config = {
 class Config():
 
     def get(key, default=None):
+
+        if key == "DOMAIN_BASE":
+            return "https://{}".format(Site.objects.get_current().domain)
+        elif key == "CLIENT_ID":
+            domain_base = Site.objects.get_current().domain
+            return keys["INSTAGRAM"][domain_base]["CLIENT_ID"]
+        elif key == "CLIENT_SECRET":
+            domain_base = Site.objects.get_current().domain
+            return keys["INSTAGRAM"][domain_base]["CLIENT_SECRET"]
+
         try:
             return config[key]
         except KeyError as e:
@@ -32,9 +38,3 @@ class Config():
                 log.warning(("instagram.conf got request for non existent key "
                              "{}").format(key))
                 raise e
-
-    def set_domain_base(base):
-        if base.endswith("/"):
-            config["DOMAIN_BASE"] = base[:-1]
-        else:
-            config["DOMAIN_BASE"] = base

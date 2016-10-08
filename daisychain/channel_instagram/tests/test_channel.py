@@ -11,6 +11,7 @@ import responses
 
 
 class ChannelTest(TestCase):
+    fixtures = ["core/fixtures/initial_data.json"]
 
     def setUp(self):
         self.channel = channel.InstagramChannel()
@@ -858,4 +859,3 @@ class ChannelTest(TestCase):
             mock_get.assert_called_with("API_USER_SELF_ENDPOINT")
 
             self.assertEqual(result, ChannelStateForUser.connected)
-

@@ -4,7 +4,8 @@ from django.test.client import Client
 from channel_instagram import setup, channel
 from channel_instagram.conf import Config
 from channel_instagram.models import InstagramAccount
-from channel_instagram.views import SESSKEY_OAUTH_NEXT_URI, SESSKEY_OAUTH_VERIFY_TOKEN
+from channel_instagram.views import (SESSKEY_OAUTH_NEXT_URI,
+                                     SESSKEY_OAUTH_VERIFY_TOKEN)
 from django.contrib.auth.models import User
 from mock import MagicMock, patch
 from time import sleep
@@ -16,6 +17,7 @@ from urllib.parse import urlsplit, parse_qs
 
 
 class SubscriptionTest(TransactionTestCase):
+    fixtures = ["core/fixtures/initial_data.json"]
 
     def setUp(self):
 

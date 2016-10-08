@@ -102,8 +102,6 @@ class OAuthView(LoginRequiredMixin, RedirectingView):
 
         log.debug("Instagram handling get-request")
 
-        Config.set_domain_base(request.build_absolute_uri("/"))
-
         q_code = request.GET.get('code', False)
         q_error = request.GET.get('error', False)
 
