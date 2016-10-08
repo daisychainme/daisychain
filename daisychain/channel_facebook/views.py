@@ -24,11 +24,17 @@ from .models import FacebookAccount
 log = getLogger('channel')
 
 
+def calculate_digest(payload):
+    return hmac_new(Config.get("APP_SECRET").encode("utf-8"),
+                    msg=payload,
+                    digestmod=sha1).hexdigest()
+
+
 class StartAuthenticationView(LoginRequiredMixin, View):
     def get(self, request):
         callback_url = reverse('facebook:callback')
         state_string = str(uuid4())
-        app_scope = 'public_profile,publish_actions,user_status,user_posts'
+        app_scope = 'public_profile,publish_actions,user_status,user_posts,user_photos'
         params = {
             'client_id': Config.get("APP_ID"),
             'redirect_uri': request.build_absolute_uri(callback_url),
@@ -145,9 +151,7 @@ class WebhookView(View):
     def post(self, request, *args, **kwargs):
         payload = request.body
         # check if request is from facebook by calculating a hash
-        digest = hmac_new(Config.get("APP_SECRET").encode("utf-8"),
-                          msg=payload,
-                          digestmod=sha1).hexdigest()
+        digest = calculate_digest(payload)
         # check if the calculated hash is the same as sent by instagram
         # return 400 Bad Request if not
         try:
@@ -194,8 +198,7 @@ class RevokeAuthenticationView(View):
             raise ValueError('Unknown algorithm. Expected HMAC-SHA256')
 
         # check sig
-        secret = Config.get("APP_SECRET").encode('utf-8')
-        expected_sig = hmac_new(secret, payload.encode(), sha256).digest()
+        expected_sig = calculate_digest(payload.encode())
         if sig != expected_sig:
             raise ValueError('Bad Signed JSON signature!')
 

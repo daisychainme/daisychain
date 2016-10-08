@@ -281,6 +281,18 @@
         "Facebook",
         104
       ],
+      "name": "video",
+      "mime_type": "video",
+      "example_value": ""
+    }
+  },
+  {
+    "model": "core.TriggerOutput",
+    "fields": {
+      "trigger": [
+        "Facebook",
+        104
+      ],
       "name": "image_low",
       "mime_type": "image",
       "example_value": ""
@@ -306,6 +318,123 @@
         102
       ],
       "name": "hashtag"
+    }
+  },
+  {
+    "model": "core.action",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "Post Status",
+      "action_type": 100
+    }
+  },
+  {
+    "model": "core.action",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "Post Image",
+      "action_type": 101
+    }
+  },
+  {
+    "model": "core.action",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "Post Link",
+      "action_type": 103
+    }
+  },
+  {
+    "model": "core.action",
+    "fields": {
+      "channel": [
+        "Facebook"
+      ],
+      "name": "Post Video",
+      "action_type": 104
+    }
+  },
+  {
+    "model": "core.ActionInput",
+    "fields": {
+      "action": [
+        "Facebook",
+        100
+      ],
+      "name": "message",
+      "mime_type": "text"
+    }
+  },
+  {
+    "model": "core.ActionInput",
+    "fields": {
+      "action": [
+        "Facebook",
+        101
+      ],
+      "name": "message",
+      "mime_type": "text"
+    }
+  },
+  {
+    "model": "core.ActionInput",
+    "fields": {
+      "action": [
+        "Facebook",
+        101
+      ],
+      "name": "image",
+      "mime_type": "image"
+    }
+  },
+  {
+    "model": "core.ActionInput",
+    "fields": {
+      "action": [
+        "Facebook",
+        103
+      ],
+      "name": "message",
+      "mime_type": "text"
+    }
+  },
+  {
+    "model": "core.ActionInput",
+    "fields": {
+      "action": [
+        "Facebook",
+        103
+      ],
+      "name": "link",
+      "mime_type": "text"
+    }
+  },
+  {
+    "model": "core.ActionInput",
+    "fields": {
+      "action": [
+        "Facebook",
+        104
+      ],
+      "name": "message",
+      "mime_type": "text"
+    }
+  },
+  {
+    "model": "core.ActionInput",
+    "fields": {
+      "action": [
+        "Facebook",
+        104
+      ],
+      "name": "video",
+      "mime_type": "video"
     }
   }
 ]

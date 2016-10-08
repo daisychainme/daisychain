@@ -1,12 +1,12 @@
-from django.test import TestCase
-from django.utils import timezone
-from django.test.client import Client
 from django.contrib.auth.models import User
+from django.test import TestCase
+from django.test.client import Client
+from django.utils import timezone
 
 from channel_facebook.channel import FacebookChannel
 from channel_facebook.models import FacebookAccount
-
 from core import models
+
 
 class FacebookBaseTestCase(TestCase):
     fixtures = ['core/fixtures/initial_data.json','channel_facebook/fixtures/initial_data.json']
@@ -29,7 +29,7 @@ class FacebookBaseTestCase(TestCase):
         self.channel_id = models.Channel.objects.get(name="Facebook").id
         self.client = Client()
         self.conditions = {'hashtag': '#me'}
-        self.fields = 'message,actions,full_picture,picture,from,created_time,link,permalink_url,type,description'
+        self.fields = 'message,actions,full_picture,picture,from,created_time,link,permalink_url,type,description,source,object_id'
         self.webhook_data = {
             "time": self.time,
             "id": "101915710270588",

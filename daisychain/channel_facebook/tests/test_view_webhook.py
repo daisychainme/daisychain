@@ -25,6 +25,28 @@ class TestWebhookView(FacebookBaseTestCase):
         response = self.client.get(reverse('facebook:hooks'), data)
         self.assertEquals(response.status_code, 400)
 
+    @patch('channel_facebook.views.calculate_digest')
+    def test_webhook_send_valid_webhook(self, mock_calculate_digest):
+        payload = '{"entry":' \
+                  '[{"time": 1474286151,' \
+                  '"id": "101915710270588",' \
+                  '"changed_fields": ["statuses"],' \
+                  '"uid": "101915710270588"}],' \
+                  '"object": "user"}'
+        self.signature = 'sha1=test_signature'
+
+        mock_calculate_digest.return_value = 'test_signature'
+
+        resp = self.client.post(reverse("facebook:hooks"),
+                                payload,
+                                HTTP_X_HUB_SIGNATURE=self.signature,
+                                content_type="application/json"
+                                )
+
+        mock_calculate_digest.assert_called_once()
+        self.assertEqual(200, resp.status_code)
+
+
     def test_webhook_send_invalid_webhook(self):
         payload = '{"entry":' \
                   '[{"time": 1474286151,' \

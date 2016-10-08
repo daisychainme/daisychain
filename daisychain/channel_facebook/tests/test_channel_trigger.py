@@ -1,12 +1,12 @@
 from mock import patch
 
 from channel_facebook.channel import TriggerType
-from core.channel import (NotSupportedTrigger, NotSupportedAction, ConditionNotMet)
+from core.channel import (NotSupportedTrigger, ConditionNotMet)
 from core.models import Channel, Trigger
 from .test_base import FacebookBaseTestCase
 
 
-class ChannelTestCase(FacebookBaseTestCase):
+class ChannelTriggerTestCase(FacebookBaseTestCase):
     def test_fire_trigger_post(self):
         get_data = [{
             'message': 'Testmessage',
@@ -254,10 +254,10 @@ class ChannelTestCase(FacebookBaseTestCase):
         }
 
         self.channel.fill_recipe_mappings(trigger_type=-42,
-                                              userid=self.user.id,
-                                              payload=payload,
-                                              conditions=self.conditions,
-                                              mappings={})
+                                          userid=self.user.id,
+                                          payload=payload,
+                                          conditions=self.conditions,
+                                          mappings={})
         self.assertTrue(mock_replace_mappings.called)
 
     @patch('channel_facebook.channel.FacebookChannel._fill_mappings_for_new_entry')
@@ -324,7 +324,8 @@ class ChannelTestCase(FacebookBaseTestCase):
             'link': 'https://www.facebook.com/photo.php?fbid=101933566935469',
             'permalink_url': 'https://www.facebook.com/',
             'full_picture': 'https://scontent.xx.fbcdn.net/1_n.jpg',
-            'picture': 'https://scontent.xx.fbcdn.net/1_n.jpg'
+            'picture': 'https://scontent.xx.fbcdn.net/1_n.jpg',
+            'video': 'https://scontent.xx.fbcdn.net/1_n.mp4',
         }
         mappings = {
             'input1': 'you wrote: %message%',
@@ -332,7 +333,8 @@ class ChannelTestCase(FacebookBaseTestCase):
             'input3': 'A link: %link%',
             'input4': 'A Men wrote: %description%',
             'input5': 'a picture in small: %image_low%',
-            'input6': 'a large picture: %image_standard%'
+            'input6': 'a large picture: %image_standard%',
+            'input7': 'a video: %video%',
         }
         with patch('core.utils.download_file') as mock_download:
             mock_download.side_effect = mock_downloadfile
@@ -346,18 +348,13 @@ class ChannelTestCase(FacebookBaseTestCase):
                 'input4': 'A Men wrote: ' + payload['description'],
                 'input5': payload['picture'],
                 'input6': payload['full_picture'],
+                'input7': payload['video'],
             }
             self.assertEquals(res, expected)
 
             res = self.channel._fill_mappings_for_new_entry(inputs=mappings,
                                                             payload={})
             self.assertEquals(res, mappings)
-
-    def test_handle_action_raises_exception(self):
-        with self.assertRaises(NotSupportedAction):
-            self.channel.handle_action(action_type=TriggerType.new_photo,
-                                       userid=self.user.id,
-                                       inputs={})
 
     def test_trigger_synopsis(self):
         conditions = [{'value': '#Daisychain'}]
@@ -388,10 +385,13 @@ class ChannelTestCase(FacebookBaseTestCase):
             'picture': 'nakedwoman',
             'full_picture': 'largepicture',
             'permalink_url': 'http://daisychain.me/secret',
-            'link': 'http://daisychain.me/s3cr3t'
+            'link': 'http://daisychain.me/s3cr3t',
+            'source': 'linktovideo',
         }
 
-        self.assertDictEqual(self.channel._get_payload(feed), feed)
+        response = self.channel._get_payload(feed)
+        feed['video'] = feed.pop('source')
+        self.assertDictEqual(response, feed)
 
     @patch("channel_facebook.channel.Config.get")
     @patch("channel_facebook.channel.reverse")

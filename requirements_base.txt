@@ -27,3 +27,5 @@ django-allauth==0.27.0
 django-nocaptcha-recaptcha==0.0.19
 google-api-python-client==1.5.3
 oauth2client==2.0
+python-magic==0.4.12
+python-dateutil==2.5.3

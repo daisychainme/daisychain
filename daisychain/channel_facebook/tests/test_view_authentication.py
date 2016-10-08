@@ -50,6 +50,23 @@ class TestStopAuthenticationView(FacebookBaseTestCase):
     def test_delete_entry(self):
         self.client.force_login(self.user)
 
+    @patch('channel_facebook.views.calculate_digest')
+    def test_revoke_authentification(self, mock_calculate_digest):
+
+        mock_calculate_digest.return_value = b'decoded_signature'
+
+        data = {'signed_request': "ZGVjb2RlZF9zaWduYXR1cmU=."
+                                  "eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImlzc"
+                                  "3VlZF9hdCI6MTQ3NDI5MDc0MSwidXNlciI6eyJjb3"
+                                  "VudHJ5IjoiZGUiLCJsb2NhbGUiOiJkZV9ERSJ9LCJ"
+                                  "1c2VyX2lkIjoiMTAxOTE1NzEwMjcwNTg4In0"}
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("facebook:revokeauthentication"), data)
+        with self.assertRaises(FacebookAccount.DoesNotExist):
+            FacebookAccount.objects.get(user=self.user)
+        self.assertEquals(response.status_code, 200)
+        self.create_facebook_account(self.user)
+
     def test_revoke_authentificatotion_not_valid(self):
         response = self.client.get(reverse("facebook:revokeauthentication"))
         self.assertEquals(response.status_code, 200)
