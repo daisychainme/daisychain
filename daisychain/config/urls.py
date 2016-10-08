@@ -39,4 +39,5 @@ urlpatterns = [
     url(r'^mail/', include('channel_mail.urls', namespace='mail')),
     url(r"^accounts/", include('allauth.urls')),
     url(r'^facebook/', include('channel_facebook.urls', namespace='facebook')),
+    url(r'^gmail/', include('channel_gmail.urls', namespace='gmail')),
 ]

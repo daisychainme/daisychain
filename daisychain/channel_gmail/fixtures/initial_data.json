@@ -1,0 +1,51 @@
+[
+    {
+        "model": "core.channel",
+        "fields": {
+            "name": "Gmail",
+            "color": "#FFFFFF",
+            "image": "/static/channel_gmail/gmail.png",
+            "font_color": "#000000"
+        }
+    },
+    {
+        "model": "core.action",
+        "fields": {
+            "name": "Send Mail",
+            "channel": ["Gmail"],
+            "action_type": 100
+        }
+    },
+     {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "sender",
+            "action": ["Gmail", 100],
+            "mime_type": "text"
+        }
+    },
+     {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "to",
+            "action": ["Gmail", 100],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "subject",
+            "action": ["Gmail", 100],
+            "mime_type": "text"
+        }
+    },
+    {
+        "model": "core.ActionInput",
+        "fields": {
+            "name": "message",
+            "action": ["Gmail", 100],
+            "mime_type": "text"
+        }
+    }
+]

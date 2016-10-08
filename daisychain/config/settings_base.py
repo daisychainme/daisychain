@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'channel_mail',
     'channel_facebook',
     'channel_rss',
+    'channel_gmail',
 ]
 
 MIDDLEWARE_CLASSES = [

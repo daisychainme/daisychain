@@ -25,3 +25,5 @@ gunicorn==19.6.0
 psycopg2==2.6.2
 django-allauth==0.27.0
 django-nocaptcha-recaptcha==0.0.19
+google-api-python-client==1.5.3
+oauth2client==2.0
