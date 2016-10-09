@@ -5,9 +5,10 @@ from core.channel import (NotSupportedAction, NotSupportedTrigger,
                           ChannelStateForUser, ConditionNotMet)
 from channel_rss.channel import RssChannel
 from channel_rss.config import TRIGGER_TYPE
+from channel_rss.tests.test_base import BaseTest
 
 
-class ChannelTest(TestCase):
+class ChannelBasicsTest(BaseTest):
 
     def setUp(self):
         self.channel = RssChannel()
@@ -71,6 +72,59 @@ class ChannelTest(TestCase):
         self.assertEquals(self.channel.user_is_connected(None),
                           ChannelStateForUser.unnecessary)
 
+
+class ChannelFeaturesTest(BaseTest):
+
+    def setUp(self):
+        self.user = self.create_user()
+        self.feeds = ['www.example.com/rss', 'www.foobar.net/rss']
+        self.trigger_channel = self.create_channel('RSS')
+        self.action_channel = self.create_channel('Twitter')
+        self.trigger = self.create_trigger(
+            channel=self.trigger_channel,
+            trigger_type=101,
+            name="New entries containing specific keywords")
+        self.action = self.create_action(channel=self.action_channel,
+                                         action_type=200,
+                                         name="Post Status")
+        self.trigger_output = 'summaries_and_links'
+        self.url_input = self.create_trigger_input(
+            trigger=self.trigger,
+            name="feed_url")
+        self.keyword_input = self.create_trigger_input(
+            trigger=self.trigger,
+            name='keyword')
+        self.action_input = self.create_action_input(self.action,
+                                                     'status',
+                                                     'text')
+        # create recipes
+        self.recipe = self.create_recipe(self.trigger, self.action, self.user)
+        self.create_recipe_mapping(
+            self.recipe,
+            self.trigger_output,
+            self.action_input)
+        # url and keyword conditions
+        self.create_recipe_condition(self.recipe,
+                                     self.url_input,
+                                     self.feeds[0])
+        self.create_recipe_condition(self.recipe,
+                                     self.keyword_input,
+                                     'interesting')
+        # second recipe
+        self.recipe2 = self.create_recipe(self.trigger, self.action, self.user)
+        self.create_recipe_mapping(
+            self.recipe2,
+            self.trigger_output,
+            self.action_input
+        )
+        self.create_recipe_condition(self.recipe2,
+                                     self.url_input,
+                                     self.feeds[1])
+        self.create_recipe_condition(self.recipe2,
+                                     self.url_input,
+                                     'teapot')
+
+
     @patch('channel_rss.utils.entries_since')
     def test_fetch_entries_by_keyword(self, mock_entries_since):
         mock_entries_since.return_value = [
@@ -85,5 +139,4 @@ class ChannelTest(TestCase):
                 'link': 'example.com/other'
             }
         ]
-        # mock the recipe condition
 
