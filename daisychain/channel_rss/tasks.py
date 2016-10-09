@@ -20,6 +20,7 @@ def fetch_rss_feeds():
     """
     Fetch RSS feeds periodically and fire trigger if changes are detected.
     """
+    log.debug('fetch rss feeds!')
     uniques = unique_feed_urls()
     # create RssFeed object for every unique feed if it does not exist yet.
     for feed_url in uniques:
@@ -53,10 +54,11 @@ def fetch_rss_feeds():
             # there are no new entries. Do not fire any trigger.
             continue
 
+        print("NEW ENTRIES")
         feed.last_modified = latest_update
         feed.save()
 
-        # parse feeds and fire triggers if nemcessary.
+        # parse feeds and fire triggers if necessary.
         rss_channel = RssChannel()
         rss_channel.fetch_entries_by_keyword(feed, previous_update)
 
