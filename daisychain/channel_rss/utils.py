@@ -115,7 +115,9 @@ def unique_feed_urls():
         set of feed urls.
     """
     recipe_conditions = RecipeCondition.objects.filter(
-        trigger_input__trigger__channel__name='RSS')
+        trigger_input__trigger__channel__name='RSS',
+        trigger_input__name='feed_url',
+    )
     return set(e.value for e in recipe_conditions)
 
 
