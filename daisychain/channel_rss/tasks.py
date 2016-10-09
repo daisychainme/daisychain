@@ -8,7 +8,7 @@ from core.core import Core
 from datetime import datetime
 from channel_rss.models import RssFeed
 from channel_rss.utils import (unique_feed_urls, get_latest_update,
-                               build_string_from_entries)
+                               build_string_from_feed)
 from channel_rss.config import CHANNEL_NAME
 
 log = get_task_logger(__name__)
@@ -56,13 +56,13 @@ def fetch_rss_feeds():
         feed.save()
 
         # build output strings, build payload.
-        summaries_links = build_string_from_entries(feed.feed_url,
-                                                    'summary',
-                                                    'link',
-                                                    since=previous_update)
-        summaries = build_string_from_entries(feed.feed_url,
-                                              'summary',
-                                              since=previous_update)
+        summaries_links = build_string_from_feed(feed.feed_url,
+                                                 'summary',
+                                                 'link',
+                                                 since=previous_update)
+        summaries = build_string_from_feed(feed.feed_url,
+                                           'summary',
+                                           since=previous_update)
         # payload consisting of trigger outputs and feed url
         # feed url is used in RssChannel.fill_recipe_mappings
         payload = {

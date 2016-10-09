@@ -50,7 +50,7 @@ def entries_since(feed, date):
     return [e for e in entries if e['updated_parsed'] > date]
 
 
-def build_string_from_entries(feed, *args, since=None, keyword=None):
+def build_string_from_feed(feed, *args, since=None, keyword=None):
     """
     Retrieves fields for every entry in the feed.
 
@@ -71,6 +71,15 @@ def build_string_from_entries(feed, *args, since=None, keyword=None):
     else:
         feed = _parse_feed_if_necessary(feed)
         entries = feed.entries
+    result_string = ""
+    for entry in entries:
+        for field in args:
+            result_string = "{}{}\n".format(result_string, entry[field])
+        result_string = "{}\n".format(result_string)
+    return result_string
+
+
+def build_string_from_entry_list(entries, *args):
     result_string = ""
     for entry in entries:
         for field in args:
@@ -134,11 +143,17 @@ def entries_by_keyword(feed, keyword, since=None):
         entries = feed['entries']
 
     # filter to get entries containing keyword
-    filtered = filter(lambda x: keyword.lower() in x['title'].lower()
-                                or keyword.lower() in x['summary'].lower(),
+    filtered = filter(lambda x: keyword.lower() in x['title'].lower() or
+                                keyword.lower() in x['summary'].lower(),
                       entries)
     return list(filtered)
 
+
+def filter_entries_by_keyword(entries, keyword):
+    filtered = filter(lambda x: keyword.lower() in x['title'].lower() or
+                                keyword.lower() in x['summary'].lower(),
+                      entries)
+    return list(filtered)
 
 
 
