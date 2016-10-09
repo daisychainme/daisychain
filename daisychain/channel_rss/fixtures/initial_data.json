@@ -43,6 +43,24 @@
         }
     },
     {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["RSS", 101],
+            "name": "summaries",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
+        "model": "core.TriggerOutput",
+        "fields": {
+            "trigger": ["RSS", 101],
+            "name": "summaries_and_links",
+            "mime_type": "text",
+            "example_value": ""
+        }
+    },
+    {
         "model": "core.TriggerInput",
         "fields": {
             "trigger": ["RSS", 100],
