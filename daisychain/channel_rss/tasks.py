@@ -10,6 +10,7 @@ from channel_rss.models import RssFeed
 from channel_rss.utils import (unique_feed_urls, get_latest_update,
                                build_string_from_feed)
 from channel_rss.config import CHANNEL_NAME
+from channel_rss.channel import RssChannel
 
 log = get_task_logger(__name__)
 
@@ -54,6 +55,10 @@ def fetch_rss_feeds():
 
         feed.last_modified = latest_update
         feed.save()
+
+        # parse feeds and fire triggers if nemcessary.
+        rss_channel = RssChannel()
+        rss_channel.fetch_entries_by_keyword(feed, previous_update)
 
         # build output strings, build payload.
         summaries_links = build_string_from_feed(feed.feed_url,

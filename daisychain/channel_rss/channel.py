@@ -52,12 +52,7 @@ class RssChannel(Channel):
 
         """
 
-        '''
-        get all recipe conditions of a recipe that have the feed url as a
-        recipe condition and that correspond to the trigger input keyword.
-        These recipe conditions are the keywords that condition if a
-        certain recipe is triggered and executed.
-        '''
+        # get trigger inputs keyword and feed url
         trigger_type = TRIGGER_TYPE['entries_keyword']
         url_input = TriggerInput.objects.get(trigger__channel__name='RSS',
                                              trigger__trigger_type=trigger_type,
@@ -66,7 +61,8 @@ class RssChannel(Channel):
                 trigger__channel__name='RSS',
                 trigger__trigger_type=trigger_type,
                 name='keyword')
-        # get all conditions of the feeds url
+        # get all recipe conditions of the feeds url,
+        # those correspond to all recipes that use this feed.
         url_conditions = RecipeCondition.objects.filter(value=feed.url,
                                                         trigger_input=url_input)
         # fetch rss feed
@@ -81,7 +77,7 @@ class RssChannel(Channel):
             # check for occurence / get the entries
             filtered_entries = filter_entries_by_keyword(entries,
                                                          keyword)
-            # build strings, fill payoad
+            # build strings, fill payload, fire trigger
             summaries = build_string_from_entry_list(filtered_entries,
                                                      'summary')
             summaries_and_links = build_string_from_entry_list(filtered_entries,
