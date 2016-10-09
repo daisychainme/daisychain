@@ -25,8 +25,16 @@ class RssChannel(Channel):
                              payload, conditions, mappings):
         if payload['feed_url'] != conditions['feed_url']:
             raise ConditionNotMet('Feed urls do not match.')
+
         # check for trigger type and replace mappings accordingly
         if trigger_type == TRIGGER_TYPE['new_entries']:
+            to_replace = ['summaries', 'summaries_and_links']
+            return replace_text_mappings(mappings=mappings,
+                                         to_replace=to_replace,
+                                         payload=payload)
+        elif trigger_type == TRIGGER_TYPE['entries_keyword']:
+            if payload['keyword'] != payload['keyword']:
+                raise ConditionNotMet('keywords do not match')
             to_replace = ['summaries', 'summaries_and_links']
             return replace_text_mappings(mappings=mappings,
                                          to_replace=to_replace,
@@ -51,7 +59,6 @@ class RssChannel(Channel):
         Returns:
 
         """
-
         # get trigger inputs keyword and feed url
         trigger_type = TRIGGER_TYPE['entries_keyword']
         url_input = TriggerInput.objects.get(trigger__channel__name='RSS',
@@ -63,10 +70,10 @@ class RssChannel(Channel):
                 name='keyword')
         # get all recipe conditions of the feeds url,
         # those correspond to all recipes that use this feed.
-        url_conditions = RecipeCondition.objects.filter(value=feed.url,
+        url_conditions = RecipeCondition.objects.filter(value=feed.feed_url,
                                                         trigger_input=url_input)
         # fetch rss feed
-        entries = entries_since(feed.url, since)
+        entries = entries_since(feed.feed_url, since)
 
         for condition in url_conditions:
             # for each condition get the keyword via the corresponding recipe
@@ -87,12 +94,12 @@ class RssChannel(Channel):
                 'summaries_and_links': summaries_and_links,
                 'summaries': summaries,
                 'keyword': keyword,
-                'feed_url': feed.url
+                'feed_url': feed.feed_url
             }
 
             Core().handle_trigger(channel_name=CHANNEL_NAME,
                                   trigger_type=TRIGGER_TYPE['entries_keyword'],
-                                  userid=condition.recipe.user,
+                                  userid=condition.recipe.user.id,
                                   payload=payload)
 
 
