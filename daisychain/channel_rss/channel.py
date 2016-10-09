@@ -4,7 +4,10 @@ from core.channel import (Channel, NotSupportedTrigger, NotSupportedAction,
                           ConditionNotMet, ChannelStateForUser)
 from core.utils import replace_text_mappings
 from core.models import (RecipeCondition, Recipe, TriggerInput)
-from channel_rss.config import TRIGGER_TYPE
+from core.core import Core
+from channel_rss.config import (TRIGGER_TYPE, CHANNEL_NAME, TO_REPLACE)
+from channel_rss.utils import (entries_since, filter_entries_by_keyword,
+                               build_string_from_entry_list)
 
 
 class RssChannel(Channel):
@@ -38,11 +41,12 @@ class RssChannel(Channel):
         """
         return ChannelStateForUser.unnecessary
 
-    def fetch_entries_by_keyword(self, feed):
+    def fetch_entries_by_keyword(self, feed, since):
         """
 
         Args:
             feed:
+            since:
 
         Returns:
 
@@ -65,17 +69,35 @@ class RssChannel(Channel):
         # get all conditions of the feeds url
         url_conditions = RecipeCondition.objects.filter(value=feed.url,
                                                         trigger_input=url_input)
-        # TODO: fetch rss feed
+        # fetch rss feed
+        entries = entries_since(feed.url, since)
 
         for condition in url_conditions:
             # for each condition get the keyword via the corresponding recipe
             keyword_cond = RecipeCondition.objects.get(
                     recipe=condition.recipe,
                     trigger_input=keyword_input)
-            # TODO check for occurence / get the entries
-            # TODO build strings, fill payoad
-            # TODO fire trigger
+            keyword = keyword_cond.value
+            # check for occurence / get the entries
+            filtered_entries = filter_entries_by_keyword(entries,
+                                                         keyword)
+            # build strings, fill payoad
+            summaries = build_string_from_entry_list(filtered_entries,
+                                                     'summary')
+            summaries_and_links = build_string_from_entry_list(filtered_entries,
+                                                               'summary',
+                                                               'link')
+            payload = {
+                'summaries_and_links': summaries_and_links,
+                'summaries': summaries,
+                'keyword': keyword,
+                'feed_url': feed.url
+            }
 
+            Core().handle_trigger(channel_name=CHANNEL_NAME,
+                                  trigger_type=TRIGGER_TYPE['entries_keyword'],
+                                  userid=condition.recipe.user,
+                                  payload=payload)
 
 
 
