@@ -67,7 +67,23 @@ class ChannelTest(TestCase):
                                               mappings=mappings,
                                               payload=payload)
 
-
     def test_is_connected(self):
         self.assertEquals(self.channel.user_is_connected(None),
                           ChannelStateForUser.unnecessary)
+
+    @patch('channel_rss.utils.entries_since')
+    def test_fetch_entries_by_keyword(self, mock_entries_since):
+        mock_entries_since.return_value = [
+            {
+                'summary': 'this is the summary of a very interesting entry',
+                'title': 'testing_title',
+                'link': 'example.com/interesting'
+            },
+            {
+                'summary': 'this is the summary of a boring entry',
+                'title': 'other_title',
+                'link': 'example.com/other'
+            }
+        ]
+        # mock the recipe condition
+
