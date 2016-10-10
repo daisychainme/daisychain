@@ -28,16 +28,16 @@ class RssChannel(Channel):
 
         # check for trigger type and replace mappings accordingly
         if trigger_type == TRIGGER_TYPE['new_entries']:
-            to_replace = ['summaries', 'summaries_and_links']
+
             return replace_text_mappings(mappings=mappings,
-                                         to_replace=to_replace,
+                                         to_replace=TO_REPLACE,
                                          payload=payload)
         elif trigger_type == TRIGGER_TYPE['entries_keyword']:
-            if payload['keyword'] != payload['keyword']:
+            if payload['keyword'] != conditions['keyword']:
                 raise ConditionNotMet('keywords do not match')
-            to_replace = ['summaries', 'summaries_and_links']
+
             return replace_text_mappings(mappings=mappings,
-                                         to_replace=to_replace,
+                                         to_replace=TO_REPLACE,
                                          payload=payload)
         else:
             raise NotSupportedTrigger('trigger_type {} not supported'.format(
