@@ -4,8 +4,10 @@ from mock import patch
 from core.channel import (NotSupportedAction, NotSupportedTrigger,
                           ChannelStateForUser, ConditionNotMet)
 from channel_rss.channel import RssChannel
-from channel_rss.config import TRIGGER_TYPE
+from channel_rss.config import TRIGGER_TYPE, CHANNEL_NAME
 from channel_rss.tests.test_base import BaseTest
+from channel_rss.models import RssFeed
+from channel_rss.utils import build_string_from_entry_list
 
 
 class ChannelBasicsTest(BaseTest):
@@ -76,7 +78,9 @@ class ChannelBasicsTest(BaseTest):
 class ChannelFeaturesTest(BaseTest):
 
     def setUp(self):
-        self.user = self.create_user()
+        self.user = self.create_user('user',
+                                     'foo@exmaple.com',
+                                     'hunter2')
         self.feeds = ['www.example.com/rss', 'www.foobar.net/rss']
         self.trigger_channel = self.create_channel('RSS')
         self.action_channel = self.create_channel('Twitter')
@@ -121,13 +125,13 @@ class ChannelFeaturesTest(BaseTest):
                                      self.url_input,
                                      self.feeds[1])
         self.create_recipe_condition(self.recipe2,
-                                     self.url_input,
+                                     self.keyword_input,
                                      'teapot')
 
-
-    @patch('channel_rss.utils.entries_since')
-    def test_fetch_entries_by_keyword(self, mock_entries_since):
-        mock_entries_since.return_value = [
+    @patch('core.core.Core.handle_trigger')
+    def test_fetch_entries_by_keyword(self,
+                                      mock_handle_trigger):
+        entries = [
             {
                 'summary': 'this is the summary of a very interesting entry',
                 'title': 'testing_title',
@@ -139,4 +143,28 @@ class ChannelFeaturesTest(BaseTest):
                 'link': 'example.com/other'
             }
         ]
+        # expected entries matching keyword.
+        expected_entries = [entries[0]]
+        summaries = build_string_from_entry_list(expected_entries,
+                                                 'summary')
+        summaries_and_links = build_string_from_entry_list(expected_entries,
+                                                           'summary',
+                                                           'link')
+        expected_payload = {
+            'summaries_and_links': summaries_and_links,
+            'summaries': summaries,
+            'keyword': 'interesting',
+            'feed_url': self.feeds[0],
+        }
+        # mock_entries_since.return_value = entries
+        feed_one = RssFeed(feed_url=self.feeds[0])
+        with patch('channel_rss.channel.entries_since') as mock_entries_since:
+            mock_entries_since.return_value = entries
+            RssChannel().fetch_entries_by_keyword(feed_one, None)
+            mock_handle_trigger.assert_called_once_with(
+                channel_name=CHANNEL_NAME,
+                trigger_type=TRIGGER_TYPE['entries_keyword'],
+                userid=self.user.id,
+                payload=expected_payload
+            )
 
