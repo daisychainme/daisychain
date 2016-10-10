@@ -14,6 +14,16 @@ class ChannelBasicsTest(BaseTest):
 
     def setUp(self):
         self.channel = RssChannel()
+        self.conditions = {'feed_url': 'test.com/rss'}
+        self.mappings = {
+            'text_action_input': 'new entries: %summaries_and_links%'
+        }
+        self.payload = {
+            'summaries_and_links': 'TEST_SUMMARIES_AND_LINKS',
+            'summaries': 'TEST_SUMMARIES',
+            'feed_url': 'test.com/rss',
+            'keyword': 'interesting'
+        }
 
     def test_handle_action_raises_not_supported_action(self):
         with self.assertRaises(NotSupportedAction):
@@ -69,6 +79,35 @@ class ChannelBasicsTest(BaseTest):
                                               conditions=conditions,
                                               mappings=mappings,
                                               payload=payload)
+
+    def test_fill_recipe_mappings_keywords_matching(self):
+        trigger_type = TRIGGER_TYPE['entries_keyword']
+        conditions = {
+            'feed_url': 'test.com/rss',
+            'keyword': 'interesting',
+        }
+        ret = self.channel.fill_recipe_mappings(trigger_type=trigger_type,
+                                                userid=1,
+                                                conditions=conditions,
+                                                mappings=self.mappings,
+                                                payload=self.payload)
+        # assert that the replacement in mappings was successful.
+        exp = {'text_action_input': 'new entries: TEST_SUMMARIES_AND_LINKS'}
+        self.assertEquals(ret, exp)
+
+    def test_fill_recipe_mappings_keywords_not_matching(self):
+        trigger_type = TRIGGER_TYPE['entries_keyword']
+        conditions = {
+            'feed_url': 'test.com/rss',
+            'keyword': 'boring',
+        }
+        with self.assertRaises(ConditionNotMet):
+            self.channel.fill_recipe_mappings(trigger_type=trigger_type,
+                                              userid=1,
+                                              conditions=conditions,
+                                              mappings=self.mappings,
+                                              payload=self.payload)
+
 
     def test_is_connected(self):
         self.assertEquals(self.channel.user_is_connected(None),

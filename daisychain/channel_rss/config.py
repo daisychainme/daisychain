@@ -5,6 +5,4 @@ TRIGGER_TYPE = {
     'entries_keyword': 101
 }
 
-TO_REPLACE = {
-    'new_entries': ['summaries', 'summaries_and_links']
-}
+TO_REPLACE = ['summaries', 'summaries_and_links']
