@@ -23,7 +23,7 @@ class GithubChannel(Channel):
         returns true if a webhook for the given repo already exists
         """
         check_url = REPO_HOOKS_URL.format(repo_name)
-        response =  requests.get(check_url, headers=auth_header)
+        response = requests.get(check_url, headers=auth_header)
         data = json.loads(response.content.decode('utf-8'))
         # check if our webhook url is associated with any webhook of the repo
         return any(get_webhook_url() in e['config']['url'] for e in data)

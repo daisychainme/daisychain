@@ -174,8 +174,8 @@ class BaseTestCase(TestCase):
         test_content = b'[{"config": {"url": "https://example.com/github/hooks"}}]'
         mock_get.return_value = self.MockResponse(True,
                                                   content=test_content)
-        self.assertFalse(self.channel._check_for_webhook('test',
-                                                         'header'))
+        self.assertTrue(self.channel._check_for_webhook('test',
+                                                        'header'))
 
     @patch('channel_github.channel.GithubChannel._check_for_webhook')
     def test_create_webhook_alrready_exists(self, mock_check_for_webhook):
