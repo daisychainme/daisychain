@@ -14,8 +14,6 @@ from channel_github.config import (TRIGGER_TYPE, CHANNEL_NAME, CLIENT_ID,
 log = logging.getLogger('channel')
 
 
-
-
 class GithubChannel(Channel):
 
     def _check_for_webhook(self, repo_name, auth_header):
