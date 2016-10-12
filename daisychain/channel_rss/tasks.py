@@ -8,8 +8,9 @@ from core.core import Core
 from datetime import datetime
 from channel_rss.models import RssFeed
 from channel_rss.utils import (unique_feed_urls, get_latest_update,
-                               build_string_from_entries)
+                               build_string_from_feed)
 from channel_rss.config import CHANNEL_NAME
+from channel_rss.channel import RssChannel
 
 log = get_task_logger(__name__)
 
@@ -19,6 +20,7 @@ def fetch_rss_feeds():
     """
     Fetch RSS feeds periodically and fire trigger if changes are detected.
     """
+    log.debug('fetch rss feeds!')
     uniques = unique_feed_urls()
     # create RssFeed object for every unique feed if it does not exist yet.
     for feed_url in uniques:
@@ -52,17 +54,22 @@ def fetch_rss_feeds():
             # there are no new entries. Do not fire any trigger.
             continue
 
+        print("NEW ENTRIES")
         feed.last_modified = latest_update
         feed.save()
 
+        # parse feeds and fire triggers if necessary.
+        rss_channel = RssChannel()
+        rss_channel.fetch_entries_by_keyword(feed, previous_update)
+
         # build output strings, build payload.
-        summaries_links = build_string_from_entries(feed.feed_url,
-                                                    'summary',
-                                                    'link',
-                                                    since=previous_update)
-        summaries = build_string_from_entries(feed.feed_url,
-                                              'summary',
-                                              since=previous_update)
+        summaries_links = build_string_from_feed(feed.feed_url,
+                                                 'summary',
+                                                 'link',
+                                                 since=previous_update)
+        summaries = build_string_from_feed(feed.feed_url,
+                                           'summary',
+                                           since=previous_update)
         # payload consisting of trigger outputs and feed url
         # feed url is used in RssChannel.fill_recipe_mappings
         payload = {
