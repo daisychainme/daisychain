@@ -1,4 +1,4 @@
-# VERSION 6.2
+# VERSION 9.0
 
 # Change the version if you do an update:
 # - Major version number for intended changes
@@ -16,7 +16,7 @@ keys = {
         "APP_SECRET": "TEST_KEY",
     },
     "FACEBOOK": {
-        "www.example.com": {
+        "example.com": {
             "APP_ID": "TEST_ID",
             "APP_SECRET": "TEST_KEY"
         },
@@ -31,18 +31,26 @@ keys = {
         "APP_SECRET": "TEST_KEY"
     },
     "INSTAGRAM": {
-        "CLIENT_ID": "TEST_ID",
-        "CLIENT_SECRET": "TEST_KEY"
+        "example.com": {
+            "CLIENT_ID": "TEST_ID",
+            "CLIENT_SECRET": "TEST_KEY"
+        },
+    },
+    "OPENWEATHERMAP": {
+        "APP_KEY": "TEST_KEY",
     },
     "TWITTER": {
         "APP_KEY": "TEST_ID",
         "APP_SECRET": "TEST_KEY"
     },
     "reCaptcha": {
-        "SITE_KEY": "",
-        "SECRET_KEY": ""
-    }
+        "SITE_KEY": "TEST_ID",
+        "SECRET_KEY": "TEST_KEY"
+    },
+    "PINTEREST": {
+        "APP_ID": "TEST_ID",
+        "APP_SECRET": "TEST_KEY"
+    },
 }
 # Generate secrets with:
 # cat /dev/urandom | tr -dc 'a-zA-Z0-9-_!@#$%^&*()_+{}|:<>?=' | fold -w 64 | head -n 1
-
